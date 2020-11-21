@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:recipe_book/constants.dart';
 import 'package:recipe_book/screens/related_search.dart';
 import 'package:recipe_book/screens/recipe_search.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:http/http.dart' as http;
+import 'package:recipe_book/services/getApi.dart';
 
 class IngredientSearch extends StatefulWidget {
   @override
@@ -15,6 +19,12 @@ class _IngredientSearchState extends State<IngredientSearch> {
   TextEditingController myController = TextEditingController();
 
   final _auth = FirebaseAuth.instance;
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   //getIngredients('banana');
+  // }
+
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
@@ -31,6 +41,11 @@ class _IngredientSearchState extends State<IngredientSearch> {
         automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         elevation: 0.0,
+        leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+            ),
+            onPressed: () {}),
         title: Row(
           children: [
             FloatingActionButton(
@@ -115,9 +130,12 @@ class _IngredientSearchState extends State<IngredientSearch> {
                               print('Here');
                               String ingredientInput = myController.text;
                               print(ingredientInput);
+                              //GetApi().getIngredients(ingredientInput);
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
-                                return RelatedSearch();
+                                return RelatedSearch(
+                                  ingredient: ingredientInput,
+                                );
                               }));
                             } else {
                               print('do not do it');
