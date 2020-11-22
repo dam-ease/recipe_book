@@ -41,18 +41,12 @@ class _IngredientSearchState extends State<IngredientSearch> {
         automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         elevation: 0.0,
-        leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back,
-            ),
-            onPressed: () {}),
         title: Row(
           children: [
             FloatingActionButton(
               mini: true,
               onPressed: () {
-                _auth.signOut();
-                Navigator.pushNamed(context, '/second');
+                Navigator.pushNamed(context, 'fifth');
               },
               backgroundColor: Color.fromRGBO(255, 255, 255, 0.5),
               child: Icon(
@@ -60,9 +54,7 @@ class _IngredientSearchState extends State<IngredientSearch> {
                 color: Colors.white,
               ),
             ),
-            SizedBox(
-              width: size.width * 0.3,
-            ),
+            Spacer(),
             RaisedButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {

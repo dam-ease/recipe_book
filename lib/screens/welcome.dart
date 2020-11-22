@@ -1,82 +1,71 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:recipe_book/components/icon_content.dart';
-import 'package:recipe_book/components/reusable_card.dart';
-import 'package:recipe_book/constants.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:recipe_book/screens/grid_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Welcome extends StatelessWidget {
+  final _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.lightGreen,
+      backgroundColor: Color.fromRGBO(255, 253, 208, 0.9),
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
+            height: 100,
+          ),
+          Padding(
             padding: EdgeInsets.only(
-              top: 60.0,
-              left: 30.0,
-              right: 30.0,
-              bottom: 30.0,
+              left: 16,
+              right: 16,
             ),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'Welcome Damilola',
-                  style: kWelcome,
-                ),
-                Spacer(),
-                CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 20.0,
-                  child: IconButton(
-                      icon: FaIcon(
-                        FontAwesomeIcons.signOutAlt,
-                        color: Colors.black,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Welcome',
+                      style: GoogleFonts.openSans(
+                        textStyle: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                      onPressed: () {}),
+                    ),
+                    SizedBox(
+                      height: 4,
+                    ),
+                    Text(
+                      'Home',
+                      style: GoogleFonts.openSans(
+                          textStyle: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600)),
+                    ),
+                  ],
+                ),
+                IconButton(
+                  alignment: Alignment.topCenter,
+                  icon: Image.asset(
+                    "images/logout.png",
+                    width: 24,
+                  ),
+                  onPressed: () {
+                    _auth.signOut();
+                    Navigator.pushNamed(context, 'second');
+                  },
                 )
               ],
             ),
           ),
-          Expanded(
-              child: Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: size.width,
-            ),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(
-                    20.0,
-                  ),
-                  topRight: Radius.circular(
-                    20.0,
-                  )),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Expanded(
-                    child: Row(
-                  children: [
-                    Expanded(
-                      child: ReusableCard(
-                        onPressed: () {},
-                        color: Colors.black,
-                        cardChild: IconContent(
-                          icon: FontAwesomeIcons.heart,
-                          label: 'Favorites',
-                        ),
-                      ),
-                    ),
-                  ],
-                ))
-              ],
-            ),
-          ))
+          SizedBox(
+            height: 40,
+          ),
+          GridPage(),
         ],
       ),
     );
