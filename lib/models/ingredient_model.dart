@@ -1,283 +1,708 @@
-// To parse this JSON data, do
-//
-//     final ingredientModel = ingredientModelFromJson(jsonString);
-
-import 'dart:convert';
-
-IngredientModel ingredientModelFromJson(String str) =>
-    IngredientModel.fromJson(json.decode(str));
-
-String ingredientModelToJson(IngredientModel data) =>
-    json.encode(data.toJson());
-
 class IngredientModel {
-  IngredientModel({
-    this.q,
-    this.from,
-    this.to,
-    this.more,
-    this.count,
-    this.hits,
-  });
-
   String q;
   int from;
   int to;
   bool more;
   int count;
-  List<Hit> hits;
+  List<Hits> hits;
 
-  factory IngredientModel.fromJson(Map<String, dynamic> json) =>
-      IngredientModel(
-        q: json["q"],
-        from: json["from"],
-        to: json["to"],
-        more: json["more"],
-        count: json["count"],
-        hits: List<Hit>.from(json["hits"].map((x) => Hit.fromJson(x))),
-      );
+  IngredientModel(
+      {this.q, this.from, this.to, this.more, this.count, this.hits});
 
-  Map<String, dynamic> toJson() => {
-        "q": q,
-        "from": from,
-        "to": to,
-        "more": more,
-        "count": count,
-        "hits": List<dynamic>.from(hits.map((x) => x.toJson())),
-      };
+  IngredientModel.fromJson(Map<String, dynamic> json) {
+    q = json['q'];
+    from = json['from'];
+    to = json['to'];
+    more = json['more'];
+    count = json['count'];
+    if (json['hits'] != null) {
+      hits = new List<Hits>();
+      json['hits'].forEach((v) {
+        hits.add(new Hits.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['q'] = this.q;
+    data['from'] = this.from;
+    data['to'] = this.to;
+    data['more'] = this.more;
+    data['count'] = this.count;
+    if (this.hits != null) {
+      data['hits'] = this.hits.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
 }
 
-class Hit {
-  Hit({
-    this.recipe,
-    this.bookmarked,
-    this.bought,
-  });
-
+class Hits {
   Recipe recipe;
   bool bookmarked;
   bool bought;
 
-  factory Hit.fromJson(Map<String, dynamic> json) => Hit(
-        recipe: Recipe.fromJson(json["recipe"]),
-        bookmarked: json["bookmarked"],
-        bought: json["bought"],
-      );
+  Hits({this.recipe, this.bookmarked, this.bought});
 
-  Map<String, dynamic> toJson() => {
-        "recipe": recipe.toJson(),
-        "bookmarked": bookmarked,
-        "bought": bought,
-      };
+  Hits.fromJson(Map<String, dynamic> json) {
+    recipe =
+        json['recipe'] != null ? new Recipe.fromJson(json['recipe']) : null;
+    bookmarked = json['bookmarked'];
+    bought = json['bought'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.recipe != null) {
+      data['recipe'] = this.recipe.toJson();
+    }
+    data['bookmarked'] = this.bookmarked;
+    data['bought'] = this.bought;
+    return data;
+  }
 }
 
 class Recipe {
-  Recipe({
-    this.uri,
-    this.label,
-    this.image,
-    this.source,
-    this.url,
-    this.shareAs,
-    this.recipeYield,
-    this.dietLabels,
-    this.healthLabels,
-    this.cautions,
-    this.ingredientLines,
-    this.ingredients,
-    this.calories,
-    this.totalWeight,
-    this.totalTime,
-    this.totalNutrients,
-    this.totalDaily,
-    this.digest,
-  });
-
   String uri;
   String label;
   String image;
   String source;
   String url;
   String shareAs;
-  int recipeYield;
+  int yield;
   List<String> dietLabels;
   List<String> healthLabels;
   List<String> cautions;
   List<String> ingredientLines;
-  List<Ingredient> ingredients;
+  List<Ingredients> ingredients;
   double calories;
   double totalWeight;
   int totalTime;
-  Map<String, Total> totalNutrients;
-  Map<String, Total> totalDaily;
+  TotalNutrients totalNutrients;
+  TotalDaily totalDaily;
   List<Digest> digest;
 
-  factory Recipe.fromJson(Map<String, dynamic> json) => Recipe(
-        uri: json["uri"],
-        label: json["label"],
-        image: json["image"],
-        source: json["source"],
-        url: json["url"],
-        shareAs: json["shareAs"],
-        recipeYield: json["yield"],
-        dietLabels: List<String>.from(json["dietLabels"].map((x) => x)),
-        healthLabels: List<String>.from(json["healthLabels"].map((x) => x)),
-        cautions: List<String>.from(json["cautions"].map((x) => x)),
-        ingredientLines:
-            List<String>.from(json["ingredientLines"].map((x) => x)),
-        ingredients: List<Ingredient>.from(
-            json["ingredients"].map((x) => Ingredient.fromJson(x))),
-        calories: json["calories"].toDouble(),
-        totalWeight: json["totalWeight"].toDouble(),
-        totalTime: json["totalTime"],
-        totalNutrients: Map.from(json["totalNutrients"])
-            .map((k, v) => MapEntry<String, Total>(k, Total.fromJson(v))),
-        totalDaily: Map.from(json["totalDaily"])
-            .map((k, v) => MapEntry<String, Total>(k, Total.fromJson(v))),
-        digest:
-            List<Digest>.from(json["digest"].map((x) => Digest.fromJson(x))),
-      );
+  Recipe(
+      {this.uri,
+      this.label,
+      this.image,
+      this.source,
+      this.url,
+      this.shareAs,
+      this.yield,
+      this.dietLabels,
+      this.healthLabels,
+      this.cautions,
+      this.ingredientLines,
+      this.ingredients,
+      this.calories,
+      this.totalWeight,
+      this.totalTime,
+      this.totalNutrients,
+      this.totalDaily,
+      this.digest});
 
-  Map<String, dynamic> toJson() => {
-        "uri": uri,
-        "label": label,
-        "image": image,
-        "source": source,
-        "url": url,
-        "shareAs": shareAs,
-        "yield": recipeYield,
-        "dietLabels": List<dynamic>.from(dietLabels.map((x) => x)),
-        "healthLabels": List<dynamic>.from(healthLabels.map((x) => x)),
-        "cautions": List<dynamic>.from(cautions.map((x) => x)),
-        "ingredientLines": List<dynamic>.from(ingredientLines.map((x) => x)),
-        "ingredients": List<dynamic>.from(ingredients.map((x) => x.toJson())),
-        "calories": calories,
-        "totalWeight": totalWeight,
-        "totalTime": totalTime,
-        "totalNutrients": Map.from(totalNutrients)
-            .map((k, v) => MapEntry<String, dynamic>(k, v.toJson())),
-        "totalDaily": Map.from(totalDaily)
-            .map((k, v) => MapEntry<String, dynamic>(k, v.toJson())),
-        "digest": List<dynamic>.from(digest.map((x) => x.toJson())),
-      };
+  Recipe.fromJson(Map<String, dynamic> json) {
+    uri = json['uri'];
+    label = json['label'];
+    image = json['image'];
+    source = json['source'];
+    url = json['url'];
+    shareAs = json['shareAs'];
+    yield = json['yield'];
+    dietLabels = json['dietLabels'].cast<String>();
+    healthLabels = json['healthLabels'].cast<String>();
+    cautions = json['cautions'].cast<String>();
+    ingredientLines = json['ingredientLines'].cast<String>();
+    if (json['ingredients'] != null) {
+      ingredients = new List<Ingredients>();
+      json['ingredients'].forEach((v) {
+        ingredients.add(new Ingredients.fromJson(v));
+      });
+    }
+    calories = json['calories'];
+    totalWeight = json['totalWeight'];
+    totalTime = json['totalTime'];
+    totalNutrients = json['totalNutrients'] != null
+        ? new TotalNutrients.fromJson(json['totalNutrients'])
+        : null;
+    totalDaily = json['totalDaily'] != null
+        ? new TotalDaily.fromJson(json['totalDaily'])
+        : null;
+    if (json['digest'] != null) {
+      digest = new List<Digest>();
+      json['digest'].forEach((v) {
+        digest.add(new Digest.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['uri'] = this.uri;
+    data['label'] = this.label;
+    data['image'] = this.image;
+    data['source'] = this.source;
+    data['url'] = this.url;
+    data['shareAs'] = this.shareAs;
+    data['yield'] = this.yield;
+    data['dietLabels'] = this.dietLabels;
+    data['healthLabels'] = this.healthLabels;
+    data['cautions'] = this.cautions;
+    data['ingredientLines'] = this.ingredientLines;
+    if (this.ingredients != null) {
+      data['ingredients'] = this.ingredients.map((v) => v.toJson()).toList();
+    }
+    data['calories'] = this.calories;
+    data['totalWeight'] = this.totalWeight;
+    data['totalTime'] = this.totalTime;
+    if (this.totalNutrients != null) {
+      data['totalNutrients'] = this.totalNutrients.toJson();
+    }
+    if (this.totalDaily != null) {
+      data['totalDaily'] = this.totalDaily.toJson();
+    }
+    if (this.digest != null) {
+      data['digest'] = this.digest.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
 }
 
-class Digest {
-  Digest({
-    this.label,
-    this.tag,
-    this.schemaOrgTag,
-    this.total,
-    this.hasRdi,
-    this.daily,
-    this.unit,
-    this.sub,
-  });
-
-  String label;
-  String tag;
-  String schemaOrgTag;
-  double total;
-  bool hasRdi;
-  double daily;
-  Unit unit;
-  List<Digest> sub;
-
-  factory Digest.fromJson(Map<String, dynamic> json) => Digest(
-        label: json["label"],
-        tag: json["tag"],
-        schemaOrgTag:
-            json["schemaOrgTag"] == null ? null : json["schemaOrgTag"],
-        total: json["total"].toDouble(),
-        hasRdi: json["hasRDI"],
-        daily: json["daily"].toDouble(),
-        unit: unitValues.map[json["unit"]],
-        sub: json["sub"] == null
-            ? null
-            : List<Digest>.from(json["sub"].map((x) => Digest.fromJson(x))),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "label": label,
-        "tag": tag,
-        "schemaOrgTag": schemaOrgTag == null ? null : schemaOrgTag,
-        "total": total,
-        "hasRDI": hasRdi,
-        "daily": daily,
-        "unit": unitValues.reverse[unit],
-        "sub":
-            sub == null ? null : List<dynamic>.from(sub.map((x) => x.toJson())),
-      };
-}
-
-enum Unit { G, MG, UNIT_G, EMPTY, KCAL }
-
-final unitValues = EnumValues({
-  "%": Unit.EMPTY,
-  "g": Unit.G,
-  "kcal": Unit.KCAL,
-  "mg": Unit.MG,
-  "µg": Unit.UNIT_G
-});
-
-class Ingredient {
-  Ingredient({
-    this.text,
-    this.weight,
-    this.image,
-  });
-
+class Ingredients {
   String text;
   double weight;
   String image;
 
-  factory Ingredient.fromJson(Map<String, dynamic> json) => Ingredient(
-        text: json["text"],
-        weight: json["weight"].toDouble(),
-        image: json["image"] == null ? null : json["image"],
-      );
+  Ingredients({this.text, this.weight, this.image});
 
-  Map<String, dynamic> toJson() => {
-        "text": text,
-        "weight": weight,
-        "image": image == null ? null : image,
-      };
+  Ingredients.fromJson(Map<String, dynamic> json) {
+    text = json['text'];
+    weight = json['weight'];
+    image = json['image'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['text'] = this.text;
+    data['weight'] = this.weight;
+    data['image'] = this.image;
+    return data;
+  }
 }
 
-class Total {
-  Total({
-    this.label,
-    this.quantity,
-    this.unit,
-  });
+class TotalNutrients {
+  ENERCKCAL eNERCKCAL;
+  ENERCKCAL fAT;
+  ENERCKCAL fASAT;
+  ENERCKCAL fATRN;
+  ENERCKCAL fAMS;
+  ENERCKCAL fAPU;
+  ENERCKCAL cHOCDF;
+  ENERCKCAL fIBTG;
+  ENERCKCAL sUGAR;
+  ENERCKCAL pROCNT;
+  ENERCKCAL cHOLE;
+  ENERCKCAL nA;
+  ENERCKCAL cA;
+  ENERCKCAL mG;
+  ENERCKCAL k;
+  ENERCKCAL fE;
+  ENERCKCAL zN;
+  ENERCKCAL p;
+  ENERCKCAL vITARAE;
+  ENERCKCAL vITC;
+  ENERCKCAL tHIA;
+  ENERCKCAL rIBF;
+  ENERCKCAL nIA;
+  ENERCKCAL vITB6A;
+  ENERCKCAL fOLDFE;
+  ENERCKCAL fOLFD;
+  ENERCKCAL fOLAC;
+  ENERCKCAL vITB12;
+  ENERCKCAL vITD;
+  ENERCKCAL tOCPHA;
+  ENERCKCAL vITK1;
+  ENERCKCAL wATER;
 
+  TotalNutrients(
+      {this.eNERCKCAL,
+      this.fAT,
+      this.fASAT,
+      this.fATRN,
+      this.fAMS,
+      this.fAPU,
+      this.cHOCDF,
+      this.fIBTG,
+      this.sUGAR,
+      this.pROCNT,
+      this.cHOLE,
+      this.nA,
+      this.cA,
+      this.mG,
+      this.k,
+      this.fE,
+      this.zN,
+      this.p,
+      this.vITARAE,
+      this.vITC,
+      this.tHIA,
+      this.rIBF,
+      this.nIA,
+      this.vITB6A,
+      this.fOLDFE,
+      this.fOLFD,
+      this.fOLAC,
+      this.vITB12,
+      this.vITD,
+      this.tOCPHA,
+      this.vITK1,
+      this.wATER});
+
+  TotalNutrients.fromJson(Map<String, dynamic> json) {
+    eNERCKCAL = json['ENERC_KCAL'] != null
+        ? new ENERCKCAL.fromJson(json['ENERC_KCAL'])
+        : null;
+    fAT = json['FAT'] != null ? new ENERCKCAL.fromJson(json['FAT']) : null;
+    fASAT =
+        json['FASAT'] != null ? new ENERCKCAL.fromJson(json['FASAT']) : null;
+    fATRN =
+        json['FATRN'] != null ? new ENERCKCAL.fromJson(json['FATRN']) : null;
+    fAMS = json['FAMS'] != null ? new ENERCKCAL.fromJson(json['FAMS']) : null;
+    fAPU = json['FAPU'] != null ? new ENERCKCAL.fromJson(json['FAPU']) : null;
+    cHOCDF =
+        json['CHOCDF'] != null ? new ENERCKCAL.fromJson(json['CHOCDF']) : null;
+    fIBTG =
+        json['FIBTG'] != null ? new ENERCKCAL.fromJson(json['FIBTG']) : null;
+    sUGAR =
+        json['SUGAR'] != null ? new ENERCKCAL.fromJson(json['SUGAR']) : null;
+    pROCNT =
+        json['PROCNT'] != null ? new ENERCKCAL.fromJson(json['PROCNT']) : null;
+    cHOLE =
+        json['CHOLE'] != null ? new ENERCKCAL.fromJson(json['CHOLE']) : null;
+    nA = json['NA'] != null ? new ENERCKCAL.fromJson(json['NA']) : null;
+    cA = json['CA'] != null ? new ENERCKCAL.fromJson(json['CA']) : null;
+    mG = json['MG'] != null ? new ENERCKCAL.fromJson(json['MG']) : null;
+    k = json['K'] != null ? new ENERCKCAL.fromJson(json['K']) : null;
+    fE = json['FE'] != null ? new ENERCKCAL.fromJson(json['FE']) : null;
+    zN = json['ZN'] != null ? new ENERCKCAL.fromJson(json['ZN']) : null;
+    p = json['P'] != null ? new ENERCKCAL.fromJson(json['P']) : null;
+    vITARAE = json['VITA_RAE'] != null
+        ? new ENERCKCAL.fromJson(json['VITA_RAE'])
+        : null;
+    vITC = json['VITC'] != null ? new ENERCKCAL.fromJson(json['VITC']) : null;
+    tHIA = json['THIA'] != null ? new ENERCKCAL.fromJson(json['THIA']) : null;
+    rIBF = json['RIBF'] != null ? new ENERCKCAL.fromJson(json['RIBF']) : null;
+    nIA = json['NIA'] != null ? new ENERCKCAL.fromJson(json['NIA']) : null;
+    vITB6A =
+        json['VITB6A'] != null ? new ENERCKCAL.fromJson(json['VITB6A']) : null;
+    fOLDFE =
+        json['FOLDFE'] != null ? new ENERCKCAL.fromJson(json['FOLDFE']) : null;
+    fOLFD =
+        json['FOLFD'] != null ? new ENERCKCAL.fromJson(json['FOLFD']) : null;
+    fOLAC =
+        json['FOLAC'] != null ? new ENERCKCAL.fromJson(json['FOLAC']) : null;
+    vITB12 =
+        json['VITB12'] != null ? new ENERCKCAL.fromJson(json['VITB12']) : null;
+    vITD = json['VITD'] != null ? new ENERCKCAL.fromJson(json['VITD']) : null;
+    tOCPHA =
+        json['TOCPHA'] != null ? new ENERCKCAL.fromJson(json['TOCPHA']) : null;
+    vITK1 =
+        json['VITK1'] != null ? new ENERCKCAL.fromJson(json['VITK1']) : null;
+    wATER =
+        json['WATER'] != null ? new ENERCKCAL.fromJson(json['WATER']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.eNERCKCAL != null) {
+      data['ENERC_KCAL'] = this.eNERCKCAL.toJson();
+    }
+    if (this.fAT != null) {
+      data['FAT'] = this.fAT.toJson();
+    }
+    if (this.fASAT != null) {
+      data['FASAT'] = this.fASAT.toJson();
+    }
+    if (this.fATRN != null) {
+      data['FATRN'] = this.fATRN.toJson();
+    }
+    if (this.fAMS != null) {
+      data['FAMS'] = this.fAMS.toJson();
+    }
+    if (this.fAPU != null) {
+      data['FAPU'] = this.fAPU.toJson();
+    }
+    if (this.cHOCDF != null) {
+      data['CHOCDF'] = this.cHOCDF.toJson();
+    }
+    if (this.fIBTG != null) {
+      data['FIBTG'] = this.fIBTG.toJson();
+    }
+    if (this.sUGAR != null) {
+      data['SUGAR'] = this.sUGAR.toJson();
+    }
+    if (this.pROCNT != null) {
+      data['PROCNT'] = this.pROCNT.toJson();
+    }
+    if (this.cHOLE != null) {
+      data['CHOLE'] = this.cHOLE.toJson();
+    }
+    if (this.nA != null) {
+      data['NA'] = this.nA.toJson();
+    }
+    if (this.cA != null) {
+      data['CA'] = this.cA.toJson();
+    }
+    if (this.mG != null) {
+      data['MG'] = this.mG.toJson();
+    }
+    if (this.k != null) {
+      data['K'] = this.k.toJson();
+    }
+    if (this.fE != null) {
+      data['FE'] = this.fE.toJson();
+    }
+    if (this.zN != null) {
+      data['ZN'] = this.zN.toJson();
+    }
+    if (this.p != null) {
+      data['P'] = this.p.toJson();
+    }
+    if (this.vITARAE != null) {
+      data['VITA_RAE'] = this.vITARAE.toJson();
+    }
+    if (this.vITC != null) {
+      data['VITC'] = this.vITC.toJson();
+    }
+    if (this.tHIA != null) {
+      data['THIA'] = this.tHIA.toJson();
+    }
+    if (this.rIBF != null) {
+      data['RIBF'] = this.rIBF.toJson();
+    }
+    if (this.nIA != null) {
+      data['NIA'] = this.nIA.toJson();
+    }
+    if (this.vITB6A != null) {
+      data['VITB6A'] = this.vITB6A.toJson();
+    }
+    if (this.fOLDFE != null) {
+      data['FOLDFE'] = this.fOLDFE.toJson();
+    }
+    if (this.fOLFD != null) {
+      data['FOLFD'] = this.fOLFD.toJson();
+    }
+    if (this.fOLAC != null) {
+      data['FOLAC'] = this.fOLAC.toJson();
+    }
+    if (this.vITB12 != null) {
+      data['VITB12'] = this.vITB12.toJson();
+    }
+    if (this.vITD != null) {
+      data['VITD'] = this.vITD.toJson();
+    }
+    if (this.tOCPHA != null) {
+      data['TOCPHA'] = this.tOCPHA.toJson();
+    }
+    if (this.vITK1 != null) {
+      data['VITK1'] = this.vITK1.toJson();
+    }
+    if (this.wATER != null) {
+      data['WATER'] = this.wATER.toJson();
+    }
+    return data;
+  }
+}
+
+class ENERCKCAL {
   String label;
   double quantity;
-  Unit unit;
+  String unit;
 
-  factory Total.fromJson(Map<String, dynamic> json) => Total(
-        label: json["label"],
-        quantity: json["quantity"].toDouble(),
-        unit: unitValues.map[json["unit"]],
-      );
+  ENERCKCAL({this.label, this.quantity, this.unit});
 
-  Map<String, dynamic> toJson() => {
-        "label": label,
-        "quantity": quantity,
-        "unit": unitValues.reverse[unit],
-      };
+  ENERCKCAL.fromJson(Map<String, dynamic> json) {
+    label = json['label'];
+    quantity = json['quantity'];
+    unit = json['unit'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['label'] = this.label;
+    data['quantity'] = this.quantity;
+    data['unit'] = this.unit;
+    return data;
+  }
 }
 
-class EnumValues<T> {
-  Map<String, T> map;
-  Map<T, String> reverseMap;
+class TotalDaily {
+  ENERCKCAL eNERCKCAL;
+  ENERCKCAL fAT;
+  ENERCKCAL fASAT;
+  ENERCKCAL cHOCDF;
+  ENERCKCAL fIBTG;
+  ENERCKCAL pROCNT;
+  ENERCKCAL cHOLE;
+  ENERCKCAL nA;
+  ENERCKCAL cA;
+  ENERCKCAL mG;
+  ENERCKCAL k;
+  ENERCKCAL fE;
+  ENERCKCAL zN;
+  ENERCKCAL p;
+  ENERCKCAL vITARAE;
+  ENERCKCAL vITC;
+  ENERCKCAL tHIA;
+  ENERCKCAL rIBF;
+  ENERCKCAL nIA;
+  ENERCKCAL vITB6A;
+  ENERCKCAL fOLDFE;
+  ENERCKCAL vITB12;
+  ENERCKCAL vITD;
+  ENERCKCAL tOCPHA;
+  ENERCKCAL vITK1;
 
-  EnumValues(this.map);
+  TotalDaily(
+      {this.eNERCKCAL,
+      this.fAT,
+      this.fASAT,
+      this.cHOCDF,
+      this.fIBTG,
+      this.pROCNT,
+      this.cHOLE,
+      this.nA,
+      this.cA,
+      this.mG,
+      this.k,
+      this.fE,
+      this.zN,
+      this.p,
+      this.vITARAE,
+      this.vITC,
+      this.tHIA,
+      this.rIBF,
+      this.nIA,
+      this.vITB6A,
+      this.fOLDFE,
+      this.vITB12,
+      this.vITD,
+      this.tOCPHA,
+      this.vITK1});
 
-  Map<T, String> get reverse {
-    if (reverseMap == null) {
-      reverseMap = map.map((k, v) => new MapEntry(v, k));
+  TotalDaily.fromJson(Map<String, dynamic> json) {
+    eNERCKCAL = json['ENERC_KCAL'] != null
+        ? new ENERCKCAL.fromJson(json['ENERC_KCAL'])
+        : null;
+    fAT = json['FAT'] != null ? new ENERCKCAL.fromJson(json['FAT']) : null;
+    fASAT =
+        json['FASAT'] != null ? new ENERCKCAL.fromJson(json['FASAT']) : null;
+    cHOCDF =
+        json['CHOCDF'] != null ? new ENERCKCAL.fromJson(json['CHOCDF']) : null;
+    fIBTG =
+        json['FIBTG'] != null ? new ENERCKCAL.fromJson(json['FIBTG']) : null;
+    pROCNT =
+        json['PROCNT'] != null ? new ENERCKCAL.fromJson(json['PROCNT']) : null;
+    cHOLE =
+        json['CHOLE'] != null ? new ENERCKCAL.fromJson(json['CHOLE']) : null;
+    nA = json['NA'] != null ? new ENERCKCAL.fromJson(json['NA']) : null;
+    cA = json['CA'] != null ? new ENERCKCAL.fromJson(json['CA']) : null;
+    mG = json['MG'] != null ? new ENERCKCAL.fromJson(json['MG']) : null;
+    k = json['K'] != null ? new ENERCKCAL.fromJson(json['K']) : null;
+    fE = json['FE'] != null ? new ENERCKCAL.fromJson(json['FE']) : null;
+    zN = json['ZN'] != null ? new ENERCKCAL.fromJson(json['ZN']) : null;
+    p = json['P'] != null ? new ENERCKCAL.fromJson(json['P']) : null;
+    vITARAE = json['VITA_RAE'] != null
+        ? new ENERCKCAL.fromJson(json['VITA_RAE'])
+        : null;
+    vITC = json['VITC'] != null ? new ENERCKCAL.fromJson(json['VITC']) : null;
+    tHIA = json['THIA'] != null ? new ENERCKCAL.fromJson(json['THIA']) : null;
+    rIBF = json['RIBF'] != null ? new ENERCKCAL.fromJson(json['RIBF']) : null;
+    nIA = json['NIA'] != null ? new ENERCKCAL.fromJson(json['NIA']) : null;
+    vITB6A =
+        json['VITB6A'] != null ? new ENERCKCAL.fromJson(json['VITB6A']) : null;
+    fOLDFE =
+        json['FOLDFE'] != null ? new ENERCKCAL.fromJson(json['FOLDFE']) : null;
+    vITB12 =
+        json['VITB12'] != null ? new ENERCKCAL.fromJson(json['VITB12']) : null;
+    vITD = json['VITD'] != null ? new ENERCKCAL.fromJson(json['VITD']) : null;
+    tOCPHA =
+        json['TOCPHA'] != null ? new ENERCKCAL.fromJson(json['TOCPHA']) : null;
+    vITK1 =
+        json['VITK1'] != null ? new ENERCKCAL.fromJson(json['VITK1']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.eNERCKCAL != null) {
+      data['ENERC_KCAL'] = this.eNERCKCAL.toJson();
     }
-    return reverseMap;
+    if (this.fAT != null) {
+      data['FAT'] = this.fAT.toJson();
+    }
+    if (this.fASAT != null) {
+      data['FASAT'] = this.fASAT.toJson();
+    }
+    if (this.cHOCDF != null) {
+      data['CHOCDF'] = this.cHOCDF.toJson();
+    }
+    if (this.fIBTG != null) {
+      data['FIBTG'] = this.fIBTG.toJson();
+    }
+    if (this.pROCNT != null) {
+      data['PROCNT'] = this.pROCNT.toJson();
+    }
+    if (this.cHOLE != null) {
+      data['CHOLE'] = this.cHOLE.toJson();
+    }
+    if (this.nA != null) {
+      data['NA'] = this.nA.toJson();
+    }
+    if (this.cA != null) {
+      data['CA'] = this.cA.toJson();
+    }
+    if (this.mG != null) {
+      data['MG'] = this.mG.toJson();
+    }
+    if (this.k != null) {
+      data['K'] = this.k.toJson();
+    }
+    if (this.fE != null) {
+      data['FE'] = this.fE.toJson();
+    }
+    if (this.zN != null) {
+      data['ZN'] = this.zN.toJson();
+    }
+    if (this.p != null) {
+      data['P'] = this.p.toJson();
+    }
+    if (this.vITARAE != null) {
+      data['VITA_RAE'] = this.vITARAE.toJson();
+    }
+    if (this.vITC != null) {
+      data['VITC'] = this.vITC.toJson();
+    }
+    if (this.tHIA != null) {
+      data['THIA'] = this.tHIA.toJson();
+    }
+    if (this.rIBF != null) {
+      data['RIBF'] = this.rIBF.toJson();
+    }
+    if (this.nIA != null) {
+      data['NIA'] = this.nIA.toJson();
+    }
+    if (this.vITB6A != null) {
+      data['VITB6A'] = this.vITB6A.toJson();
+    }
+    if (this.fOLDFE != null) {
+      data['FOLDFE'] = this.fOLDFE.toJson();
+    }
+    if (this.vITB12 != null) {
+      data['VITB12'] = this.vITB12.toJson();
+    }
+    if (this.vITD != null) {
+      data['VITD'] = this.vITD.toJson();
+    }
+    if (this.tOCPHA != null) {
+      data['TOCPHA'] = this.tOCPHA.toJson();
+    }
+    if (this.vITK1 != null) {
+      data['VITK1'] = this.vITK1.toJson();
+    }
+    return data;
+  }
+}
+
+class Digest {
+  String label;
+  String tag;
+  String schemaOrgTag;
+  double total;
+  bool hasRDI;
+  double daily;
+  String unit;
+  List<Sub> sub;
+
+  Digest(
+      {this.label,
+      this.tag,
+      this.schemaOrgTag,
+      this.total,
+      this.hasRDI,
+      this.daily,
+      this.unit,
+      this.sub});
+
+  Digest.fromJson(Map<String, dynamic> json) {
+    label = json['label'];
+    tag = json['tag'];
+    schemaOrgTag = json['schemaOrgTag'];
+    total = json['total'];
+    hasRDI = json['hasRDI'];
+    daily = json['daily'];
+    unit = json['unit'];
+    if (json['sub'] != null) {
+      sub = new List<Sub>();
+      json['sub'].forEach((v) {
+        sub.add(new Sub.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['label'] = this.label;
+    data['tag'] = this.tag;
+    data['schemaOrgTag'] = this.schemaOrgTag;
+    data['total'] = this.total;
+    data['hasRDI'] = this.hasRDI;
+    data['daily'] = this.daily;
+    data['unit'] = this.unit;
+    if (this.sub != null) {
+      data['sub'] = this.sub.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class Sub {
+  String label;
+  String tag;
+  String schemaOrgTag;
+  double total;
+  bool hasRDI;
+  double daily;
+  String unit;
+
+  Sub(
+      {this.label,
+      this.tag,
+      this.schemaOrgTag,
+      this.total,
+      this.hasRDI,
+      this.daily,
+      this.unit});
+
+  Sub.fromJson(Map<String, dynamic> json) {
+    label = json['label'];
+    tag = json['tag'];
+    schemaOrgTag = json['schemaOrgTag'];
+    total = json['total'];
+    hasRDI = json['hasRDI'];
+    daily = json['daily'];
+    unit = json['unit'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['label'] = this.label;
+    data['tag'] = this.tag;
+    data['schemaOrgTag'] = this.schemaOrgTag;
+    data['total'] = this.total;
+    data['hasRDI'] = this.hasRDI;
+    data['daily'] = this.daily;
+    data['unit'] = this.unit;
+    return data;
   }
 }

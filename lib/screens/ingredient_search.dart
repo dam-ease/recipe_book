@@ -1,41 +1,34 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:recipe_book/constants.dart';
 import 'package:recipe_book/screens/related_search.dart';
 import 'package:recipe_book/screens/recipe_search.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:http/http.dart' as http;
-import 'package:recipe_book/services/getApi.dart';
 
-class IngredientSearch extends StatefulWidget {
-  @override
-  _IngredientSearchState createState() => _IngredientSearchState();
-}
-
-class _IngredientSearchState extends State<IngredientSearch> {
-  Future ingredient;
-
+class IngredientSearch extends StatelessWidget {
   TextEditingController myController = TextEditingController();
+  String ingredientInput;
 
-  final _auth = FirebaseAuth.instance;
+  // final _auth = FirebaseAuth.instance;
   // @override
   // void initState() {
   //   super.initState();
   //   //getIngredients('banana');
   // }
 
-  @override
-  void dispose() {
-    // Clean up the controller when the widget is disposed.
-    myController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   // Clean up the controller when the widget is disposed.
+  //   myController.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Scaffold(
+    return
+        //  Provider<String>(
+        //   create: (context) => ingredientInput,
+        Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -120,7 +113,7 @@ class _IngredientSearchState extends State<IngredientSearch> {
                           onPressed: () {
                             if (myController.text.isNotEmpty) {
                               print('Here');
-                              String ingredientInput = myController.text;
+                              ingredientInput = myController.text;
                               print(ingredientInput);
                               //GetApi().getIngredients(ingredientInput);
                               Navigator.push(context,

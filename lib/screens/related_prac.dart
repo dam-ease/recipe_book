@@ -4,11 +4,11 @@ import 'package:recipe_book/models/ingredient_model.dart';
 import 'package:recipe_book/screens/recipe_details.dart';
 import 'package:recipe_book/services/getApi.dart';
 
-class RelatedSearch extends StatelessWidget {
+class RelatedSearch2 extends StatelessWidget {
   final String ingredient;
   final List<Recipe> recipes;
 
-  RelatedSearch({this.ingredient, this.recipes});
+  RelatedSearch2({this.ingredient, this.recipes});
 
   GetApi _getApi = new GetApi();
 
@@ -37,12 +37,49 @@ class RelatedSearch extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             List<Hits> list = snapshot.data.hits;
-            return ListView.builder(
-                itemCount: list.length,
-                itemBuilder: (context, index) {
-                  print("Im here");
-                  return Text(list[index].bookmarked.toString());
-                });
+            return SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    Container(
+                      height: 40,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          AspectRatio(
+                            aspectRatio: 2.2 / 1,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.grey[200],
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'All',
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    makeItem(
+                        tag: 'red',
+                        context: context,
+                        image: 'images/ingredient.png'),
+                    makeItem(
+                        tag: 'blue',
+                        context: context,
+                        image: 'images/recipe.png'),
+                  ],
+                ),
+              ),
+            );
           } else {
             return CircularProgressIndicator();
           }

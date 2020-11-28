@@ -20,7 +20,7 @@ class MyRecipeBook extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => SearchData(),
       child: MaterialApp(
-        initialRoute: 'first',
+        initialRoute: 'fifth',
         routes: {
           'first': (context) => SignUp(),
           'second': (context) => LogIn(),
