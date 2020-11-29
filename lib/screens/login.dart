@@ -11,6 +11,8 @@ class LogIn extends StatefulWidget {
 }
 
 class _LogInState extends State<LogIn> {
+  final _formKey = GlobalKey<FormState>();
+
   final _auth = FirebaseAuth.instance;
   final textController1 = TextEditingController();
   final textController2 = TextEditingController();
@@ -40,9 +42,11 @@ class _LogInState extends State<LogIn> {
     email = textController1.text;
     password = textController2.text;
 
-    if (email == '' || password == '') {
-      showAlertDialog(context);
-    } else {
+    // if (email == '' || password == '') {
+    //   print('yes');
+    //   // showAlertDialog(context);
+    // }
+    if (_formKey.currentState.validate()) {
       setState(() {
         showSpinner = true;
       });
@@ -100,81 +104,87 @@ class _LogInState extends State<LogIn> {
                 constraints: BoxConstraints.expand(),
                 child: SafeArea(
                     child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Text(
-                        'Welcome to',
-                        style: kFirstStyle,
-                      ),
-                      Text(
-                        'Recipe Book',
-                        style: kSecondStyle,
-                      ),
-                      SizedBox(
-                        height: 73.5,
-                      ),
-                      TextFormField(
-                        controller: textController1,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration:
-                            kInputDecoration.copyWith(hintText: 'Email'),
-                      ),
-                      SizedBox(
-                        height: 16.0,
-                      ),
-                      TextFormField(
-                        controller: textController2,
-                        obscureText: true,
-                        decoration:
-                            kInputDecoration.copyWith(hintText: 'Password'),
-                      ),
-                      SizedBox(
-                        height: 6.0,
-                      ),
-                      GestureDetector(
-                        child: Text(
-                          'Forgot Password?',
-                          style: kForgotStyle,
-                          textAlign: TextAlign.right,
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(
+                          'Welcome to',
+                          style: kFirstStyle,
                         ),
-                        onTap: () {
-                          print('User has forgotten password');
-                        },
-                      ),
-                      SizedBox(
-                        height: 25.0,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          checkIfEmpty();
-                        },
-                        child: RoundedButton(
-                          displayText: 'Login',
-                          bgColor: Colors.white,
-                          textColor: Color.fromRGBO(52, 168, 83, 0.8),
+                        Text(
+                          'Recipe Book',
+                          style: kSecondStyle,
                         ),
-                      ),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      Text('or',
-                          style: kForgotStyle, textAlign: TextAlign.center),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                          print('Create an account');
-                        },
-                        child: RoundedButton(
-                          displayText: 'Create an account',
-                          bgColor: Color.fromRGBO(52, 168, 83, 0.8),
-                          textColor: Colors.white,
+                        SizedBox(
+                          height: 73.5,
                         ),
-                      ),
-                    ],
+                        TextFormField(
+                          controller: textController1,
+                          keyboardType: TextInputType.emailAddress,
+                          decoration:
+                              kInputDecoration.copyWith(hintText: 'Email'),
+                          validator: (String value) => value.isEmpty
+                              ? 'Email Address should be empty'
+                              : null,
+                        ),
+                        SizedBox(
+                          height: 16.0,
+                        ),
+                        TextFormField(
+                          controller: textController2,
+                          obscureText: true,
+                          decoration:
+                              kInputDecoration.copyWith(hintText: 'Password'),
+                        ),
+                        SizedBox(
+                          height: 6.0,
+                        ),
+                        GestureDetector(
+                          child: Text(
+                            'Forgot Password?',
+                            style: kForgotStyle,
+                            textAlign: TextAlign.right,
+                          ),
+                          onTap: () {
+                            print('User has forgotten password');
+                          },
+                        ),
+                        SizedBox(
+                          height: 25.0,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            checkIfEmpty();
+                          },
+                          child: RoundedButton(
+                            displayText: 'Login',
+                            bgColor: Colors.white,
+                            textColor: Color.fromRGBO(52, 168, 83, 0.8),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        Text('or',
+                            style: kForgotStyle, textAlign: TextAlign.center),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                            print('Create an account');
+                          },
+                          child: RoundedButton(
+                            displayText: 'Create an account',
+                            bgColor: Color.fromRGBO(52, 168, 83, 0.8),
+                            textColor: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 )),
               ),
