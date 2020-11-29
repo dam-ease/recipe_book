@@ -4,13 +4,24 @@ import 'package:recipe_book/models/ingredient_model.dart';
 import 'package:recipe_book/screens/recipe_details.dart';
 import 'package:recipe_book/services/getApi.dart';
 
-class RelatedSearch extends StatelessWidget {
+class RelatedSearch extends StatefulWidget {
   final String ingredient;
   final List<Recipe> recipes;
 
   RelatedSearch({this.ingredient, this.recipes});
 
-  GetApi _getApi = new GetApi();
+  @override
+  _RelatedSearchState createState() => _RelatedSearchState();
+}
+
+class _RelatedSearchState extends State<RelatedSearch> {
+  final GetApi _getApi = new GetApi();
+  var ingredientModel;
+
+  void initState() {
+    ingredientModel = _getApi.getIngredients(widget.ingredient);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,20 +43,21 @@ class RelatedSearch extends StatelessWidget {
           ),
         ),
       ),
-      body: FutureBuilder<IngredientModel>(
-        future: _getApi.getIngredients(ingredient),
+      body: FutureBuilder(
+        future: ingredientModel,
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            List<Hits> list = snapshot.data.hits;
-            return ListView.builder(
-                itemCount: list.length,
-                itemBuilder: (context, index) {
-                  print("Im here");
-                  return Text(list[index].bookmarked.toString());
-                });
-          } else {
+          if (!snapshot.hasData) {
             return CircularProgressIndicator();
           }
+          var ingredient = snapshot.data;
+          List list = ingredient['hits'];
+          print('$list here');
+          return ListView.builder(
+              itemCount: list.length,
+              itemBuilder: (context, index) {
+                print("Im here");
+                return Text(list[index]['bookmarked'].toString());
+              });
         },
       ),
     );

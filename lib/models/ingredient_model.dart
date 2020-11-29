@@ -195,14 +195,13 @@ class TotalNutrients {
   ENERCKCAL eNERCKCAL;
   ENERCKCAL fAT;
   ENERCKCAL fASAT;
-  ENERCKCAL fATRN;
   ENERCKCAL fAMS;
   ENERCKCAL fAPU;
   ENERCKCAL cHOCDF;
   ENERCKCAL fIBTG;
   ENERCKCAL sUGAR;
   ENERCKCAL pROCNT;
-  ENERCKCAL cHOLE;
+  CHOLE cHOLE;
   ENERCKCAL nA;
   ENERCKCAL cA;
   ENERCKCAL mG;
@@ -220,16 +219,17 @@ class TotalNutrients {
   ENERCKCAL fOLFD;
   ENERCKCAL fOLAC;
   ENERCKCAL vITB12;
-  ENERCKCAL vITD;
+  CHOLE vITD;
   ENERCKCAL tOCPHA;
   ENERCKCAL vITK1;
   ENERCKCAL wATER;
+  ENERCKCAL fATRN;
+  ENERCKCAL sUGARAdded;
 
   TotalNutrients(
       {this.eNERCKCAL,
       this.fAT,
       this.fASAT,
-      this.fATRN,
       this.fAMS,
       this.fAPU,
       this.cHOCDF,
@@ -257,7 +257,9 @@ class TotalNutrients {
       this.vITD,
       this.tOCPHA,
       this.vITK1,
-      this.wATER});
+      this.wATER,
+      this.fATRN,
+      this.sUGARAdded});
 
   TotalNutrients.fromJson(Map<String, dynamic> json) {
     eNERCKCAL = json['ENERC_KCAL'] != null
@@ -266,8 +268,6 @@ class TotalNutrients {
     fAT = json['FAT'] != null ? new ENERCKCAL.fromJson(json['FAT']) : null;
     fASAT =
         json['FASAT'] != null ? new ENERCKCAL.fromJson(json['FASAT']) : null;
-    fATRN =
-        json['FATRN'] != null ? new ENERCKCAL.fromJson(json['FATRN']) : null;
     fAMS = json['FAMS'] != null ? new ENERCKCAL.fromJson(json['FAMS']) : null;
     fAPU = json['FAPU'] != null ? new ENERCKCAL.fromJson(json['FAPU']) : null;
     cHOCDF =
@@ -278,8 +278,7 @@ class TotalNutrients {
         json['SUGAR'] != null ? new ENERCKCAL.fromJson(json['SUGAR']) : null;
     pROCNT =
         json['PROCNT'] != null ? new ENERCKCAL.fromJson(json['PROCNT']) : null;
-    cHOLE =
-        json['CHOLE'] != null ? new ENERCKCAL.fromJson(json['CHOLE']) : null;
+    cHOLE = json['CHOLE'] != null ? new CHOLE.fromJson(json['CHOLE']) : null;
     nA = json['NA'] != null ? new ENERCKCAL.fromJson(json['NA']) : null;
     cA = json['CA'] != null ? new ENERCKCAL.fromJson(json['CA']) : null;
     mG = json['MG'] != null ? new ENERCKCAL.fromJson(json['MG']) : null;
@@ -304,13 +303,18 @@ class TotalNutrients {
         json['FOLAC'] != null ? new ENERCKCAL.fromJson(json['FOLAC']) : null;
     vITB12 =
         json['VITB12'] != null ? new ENERCKCAL.fromJson(json['VITB12']) : null;
-    vITD = json['VITD'] != null ? new ENERCKCAL.fromJson(json['VITD']) : null;
+    vITD = json['VITD'] != null ? new CHOLE.fromJson(json['VITD']) : null;
     tOCPHA =
         json['TOCPHA'] != null ? new ENERCKCAL.fromJson(json['TOCPHA']) : null;
     vITK1 =
         json['VITK1'] != null ? new ENERCKCAL.fromJson(json['VITK1']) : null;
     wATER =
         json['WATER'] != null ? new ENERCKCAL.fromJson(json['WATER']) : null;
+    fATRN =
+        json['FATRN'] != null ? new ENERCKCAL.fromJson(json['FATRN']) : null;
+    sUGARAdded = json['SUGAR.added'] != null
+        ? new ENERCKCAL.fromJson(json['SUGAR.added'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -323,9 +327,6 @@ class TotalNutrients {
     }
     if (this.fASAT != null) {
       data['FASAT'] = this.fASAT.toJson();
-    }
-    if (this.fATRN != null) {
-      data['FATRN'] = this.fATRN.toJson();
     }
     if (this.fAMS != null) {
       data['FAMS'] = this.fAMS.toJson();
@@ -411,6 +412,12 @@ class TotalNutrients {
     if (this.wATER != null) {
       data['WATER'] = this.wATER.toJson();
     }
+    if (this.fATRN != null) {
+      data['FATRN'] = this.fATRN.toJson();
+    }
+    if (this.sUGARAdded != null) {
+      data['SUGAR.added'] = this.sUGARAdded.toJson();
+    }
     return data;
   }
 }
@@ -437,6 +444,28 @@ class ENERCKCAL {
   }
 }
 
+class CHOLE {
+  String label;
+  int quantity;
+  String unit;
+
+  CHOLE({this.label, this.quantity, this.unit});
+
+  CHOLE.fromJson(Map<String, dynamic> json) {
+    label = json['label'];
+    quantity = json['quantity'];
+    unit = json['unit'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['label'] = this.label;
+    data['quantity'] = this.quantity;
+    data['unit'] = this.unit;
+    return data;
+  }
+}
+
 class TotalDaily {
   ENERCKCAL eNERCKCAL;
   ENERCKCAL fAT;
@@ -444,7 +473,7 @@ class TotalDaily {
   ENERCKCAL cHOCDF;
   ENERCKCAL fIBTG;
   ENERCKCAL pROCNT;
-  ENERCKCAL cHOLE;
+  CHOLE cHOLE;
   ENERCKCAL nA;
   ENERCKCAL cA;
   ENERCKCAL mG;
@@ -460,7 +489,7 @@ class TotalDaily {
   ENERCKCAL vITB6A;
   ENERCKCAL fOLDFE;
   ENERCKCAL vITB12;
-  ENERCKCAL vITD;
+  CHOLE vITD;
   ENERCKCAL tOCPHA;
   ENERCKCAL vITK1;
 
@@ -504,8 +533,7 @@ class TotalDaily {
         json['FIBTG'] != null ? new ENERCKCAL.fromJson(json['FIBTG']) : null;
     pROCNT =
         json['PROCNT'] != null ? new ENERCKCAL.fromJson(json['PROCNT']) : null;
-    cHOLE =
-        json['CHOLE'] != null ? new ENERCKCAL.fromJson(json['CHOLE']) : null;
+    cHOLE = json['CHOLE'] != null ? new CHOLE.fromJson(json['CHOLE']) : null;
     nA = json['NA'] != null ? new ENERCKCAL.fromJson(json['NA']) : null;
     cA = json['CA'] != null ? new ENERCKCAL.fromJson(json['CA']) : null;
     mG = json['MG'] != null ? new ENERCKCAL.fromJson(json['MG']) : null;
@@ -526,7 +554,7 @@ class TotalDaily {
         json['FOLDFE'] != null ? new ENERCKCAL.fromJson(json['FOLDFE']) : null;
     vITB12 =
         json['VITB12'] != null ? new ENERCKCAL.fromJson(json['VITB12']) : null;
-    vITD = json['VITD'] != null ? new ENERCKCAL.fromJson(json['VITD']) : null;
+    vITD = json['VITD'] != null ? new CHOLE.fromJson(json['VITD']) : null;
     tOCPHA =
         json['TOCPHA'] != null ? new ENERCKCAL.fromJson(json['TOCPHA']) : null;
     vITK1 =

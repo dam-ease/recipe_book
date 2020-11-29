@@ -112,20 +112,19 @@ class IngredientSearch extends StatelessWidget {
                           ),
                           onPressed: () {
                             if (myController.text.isNotEmpty) {
-                              print('Here');
+                              print(myController.text);
                               ingredientInput = myController.text;
                               print(ingredientInput);
                               //GetApi().getIngredients(ingredientInput);
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
                                 return RelatedSearch(
-                                  ingredient: ingredientInput,
+                                  ingredient: myController.text,
                                 );
                               }));
                             } else {
                               print('do not do it');
                               // return 'Please enter your Recipe';
-
                             }
                           },
                         ),
