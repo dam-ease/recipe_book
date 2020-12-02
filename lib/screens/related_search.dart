@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:recipe_book/models/ingredient_model.dart';
 import 'package:recipe_book/screens/recipe_details.dart';
 import 'package:recipe_book/services/getApi.dart';
 
 class RelatedSearch extends StatefulWidget {
   final String ingredient;
-  final List<Recipe> recipes;
 
-  RelatedSearch({this.ingredient, this.recipes});
+  RelatedSearch({
+    this.ingredient,
+  });
 
   @override
   _RelatedSearchState createState() => _RelatedSearchState();
@@ -32,8 +31,11 @@ class _RelatedSearchState extends State<RelatedSearch> {
         leading: IconButton(
             icon: Icon(
               Icons.arrow_back,
+              color: Colors.black,
             ),
-            onPressed: () {}),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
         backgroundColor: Colors.transparent,
         title: Text(
           'Search Result',
@@ -47,7 +49,7 @@ class _RelatedSearchState extends State<RelatedSearch> {
         future: ingredientModel,
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return CircularProgressIndicator();
+            return Center(child: CircularProgressIndicator());
           }
           var ingredient = snapshot.data;
           List list = ingredient['hits'];
@@ -55,15 +57,33 @@ class _RelatedSearchState extends State<RelatedSearch> {
           return ListView.builder(
               itemCount: list.length,
               itemBuilder: (context, index) {
-                print("Im here");
-                return Text(list[index]['bookmarked'].toString());
+                //print("Im here");
+                return makeItem(
+                    tag: NetworkImage(list[index]['recipe']['image']),
+                    context: context,
+                    title: list[index]['recipe']['label'].toString(),
+                    shareAs: list[index]['recipe']['shareAs'],
+                    source: list[index]['recipe']['source'].toString(),
+                    ingredientLines: list[index]['recipe']['ingredientLines'],
+                    cal: list[index]['recipe']['calories'],
+                    time: list[index]['recipe']['totalTime'],
+                    image: NetworkImage(list[index]['recipe']['image']));
               });
         },
       ),
     );
   }
 
-  Widget makeItem({image, tag, context}) {
+  Widget makeItem(
+      {image,
+      tag,
+      context,
+      title,
+      shareAs,
+      source,
+      ingredientLines,
+      cal,
+      time}) {
     return Hero(
         tag: tag,
         child: GestureDetector(
@@ -73,17 +93,25 @@ class _RelatedSearchState extends State<RelatedSearch> {
                 MaterialPageRoute(
                     builder: (context) => RecipeDetails(
                           image: image,
+                          tag: tag,
+                          title: title,
+                          shareAs: shareAs,
+                          source: source,
+                          ingredientLines: ingredientLines,
+                          cal: cal,
+                          time: time,
                         )));
           },
           child: Container(
             height: 250,
             width: double.infinity,
             padding: EdgeInsets.all(20),
-            margin: EdgeInsets.only(bottom: 20),
+            //margin: EdgeInsets.only(bottom: 20, left: 20, right: 20),
+            margin: EdgeInsets.all(20),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               image: DecorationImage(
-                image: AssetImage(image),
+                image: image,
                 fit: BoxFit.cover,
               ),
               boxShadow: [
@@ -98,34 +126,14 @@ class _RelatedSearchState extends State<RelatedSearch> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                        child: Text(
-                      'Tomatoes',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold),
-                    )),
-                    Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle, color: Colors.white),
-                      child: Center(
-                        child: IconButton(
-                          icon: Icon(
-                            Icons.favorite_border,
-                            size: 20,
-                          ),
-                          onPressed: () {},
-                        ),
-                      ),
-                    )
-                  ],
-                )
+                Expanded(
+                    child: Text(
+                  '$title',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold),
+                ))
               ],
             ),
           ),

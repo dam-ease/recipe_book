@@ -1,23 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:share/share.dart';
 
-class RecipeDetails extends StatefulWidget {
-  final String image;
-
-  const RecipeDetails({this.image});
-  @override
-  _PracticeDetailsState createState() => _PracticeDetailsState();
-}
-
-class _PracticeDetailsState extends State<RecipeDetails> {
+class RecipeDetails extends StatelessWidget {
+  final NetworkImage image, tag;
+  final String title, source, shareAs;
+  final double cal, time;
+  final List ingredientLines;
+  RecipeDetails(
+      {this.image,
+      this.cal,
+      this.time,
+      this.tag,
+      this.ingredientLines,
+      this.shareAs,
+      this.source,
+      this.title});
+  final ScrollController _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
+    int num = ingredientLines.length;
+    String calint = cal.toStringAsFixed(2);
+    String text = shareAs.toString();
+    String subject = 'Check out this recipe';
     final size = MediaQuery.of(context).size;
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         elevation: 0.0,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+            size: 35,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: Container(
         width: double.infinity,
@@ -25,7 +47,7 @@ class _PracticeDetailsState extends State<RecipeDetails> {
         child: Stack(
           children: [
             Hero(
-              tag: 'red',
+              tag: tag,
               child: Container(
                 height: size.height * 0.55,
                 width: double.infinity,
@@ -34,7 +56,7 @@ class _PracticeDetailsState extends State<RecipeDetails> {
                 decoration: BoxDecoration(
                   //borderRadius: BorderRadius.circular(20),
                   image: DecorationImage(
-                    image: AssetImage(widget.image),
+                    image: image,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -60,14 +82,26 @@ class _PracticeDetailsState extends State<RecipeDetails> {
                         children: [
                           Row(
                             children: [
-                              Text(
-                                'Tomatoes',
-                                style: GoogleFonts.roboto(
-                                    fontSize: 22, fontWeight: FontWeight.bold),
+                              Expanded(
+                                child: Text(
+                                  '$title',
+                                  style: GoogleFonts.roboto(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
-                              Spacer(),
+                              //Spacer(),
                               IconButton(
-                                  icon: Icon(Icons.share), onPressed: () {}),
+                                  icon: Icon(Icons.share),
+                                  onPressed: () {
+                                    final RenderBox box =
+                                        context.findRenderObject();
+                                    Share.share(text,
+                                        subject: subject,
+                                        sharePositionOrigin:
+                                            box.localToGlobal(Offset.zero) &
+                                                box.size);
+                                  }),
                               IconButton(
                                   icon: Icon(
                                     Icons.favorite_border,
@@ -79,7 +113,7 @@ class _PracticeDetailsState extends State<RecipeDetails> {
                             height: 2,
                           ),
                           Text(
-                            'Source: Food52',
+                            'Source: $source',
                             style:
                                 GoogleFonts.roboto(fontWeight: FontWeight.w300),
                           ),
@@ -104,7 +138,7 @@ class _PracticeDetailsState extends State<RecipeDetails> {
                                               color: Colors.grey),
                                         ),
                                         Text(
-                                          '180KCal',
+                                          '$calint Cal',
                                           style: GoogleFonts.roboto(
                                               color: Colors.grey[900],
                                               fontWeight: FontWeight.bold),
@@ -131,7 +165,7 @@ class _PracticeDetailsState extends State<RecipeDetails> {
                                               color: Colors.grey),
                                         ),
                                         Text(
-                                          '06',
+                                          '$num',
                                           style: GoogleFonts.roboto(
                                               color: Colors.grey[900],
                                               fontWeight: FontWeight.bold),
@@ -158,7 +192,7 @@ class _PracticeDetailsState extends State<RecipeDetails> {
                                               color: Colors.grey),
                                         ),
                                         Text(
-                                          '3 hours',
+                                          '$time minutes',
                                           style: GoogleFonts.roboto(
                                               color: Colors.grey[900],
                                               fontWeight: FontWeight.bold),
@@ -174,7 +208,7 @@ class _PracticeDetailsState extends State<RecipeDetails> {
                             height: 24,
                           ),
                           Text(
-                            "Recipe",
+                            "Ingredients",
                             style: GoogleFonts.roboto(
                                 fontSize: 20, fontWeight: FontWeight.bold),
                           ),
@@ -182,8 +216,26 @@ class _PracticeDetailsState extends State<RecipeDetails> {
                             height: 4,
                           ),
                           //We are going to be using a listView Builder here but for the mean time
-                          Text(
-                              'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.')
+                          Expanded(
+                            child: MediaQuery.removePadding(
+                              context: context,
+                              removeTop: true,
+                              child: Scrollbar(
+                                controller: _scrollController,
+                                isAlwaysShown: true,
+                                child: ListView.builder(
+                                  controller: _scrollController,
+                                  itemCount: ingredientLines.length,
+                                  itemBuilder: (context, index) {
+                                    return ListTile(
+                                      title: Text(
+                                          ingredientLines[index].toString()),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                          ) //Text('$ingredientLines')
                         ],
                       ),
                     ),
