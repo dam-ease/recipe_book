@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:recipe_book/components/rounded_button.dart';
 import 'package:share/share.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class RecipeDetails extends StatelessWidget {
   final NetworkImage image, tag;
-  final String title, source, shareAs;
-  final double cal, time;
+  final String title, source, shareAs, url;
+  final double cal, time, servings;
   final List ingredientLines;
   RecipeDetails(
       {this.image,
+      this.servings,
+      this.url,
       this.cal,
       this.time,
       this.tag,
@@ -17,10 +21,20 @@ class RecipeDetails extends StatelessWidget {
       this.source,
       this.title});
   final ScrollController _scrollController = ScrollController();
+  _launchURL() async {
+    String prepUrl = '$url';
+    if (await canLaunch(prepUrl)) {
+      await launch(prepUrl, forceWebView: true);
+    } else {
+      throw 'Could not launch $prepUrl';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     int num = ingredientLines.length;
     String calint = cal.toStringAsFixed(2);
+    int serv = servings.toInt();
     String text = shareAs.toString();
     String subject = 'Check out this recipe';
     final size = MediaQuery.of(context).size;
@@ -205,7 +219,18 @@ class RecipeDetails extends StatelessWidget {
                             ),
                           ),
                           SizedBox(
-                            height: 24,
+                            height: 15,
+                          ),
+                          Center(
+                            child: Text(
+                              '$serv Servings',
+                              style: GoogleFonts.roboto(
+                                  color: Colors.orangeAccent,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 15,
                           ),
                           Text(
                             "Ingredients",
@@ -235,7 +260,36 @@ class RecipeDetails extends StatelessWidget {
                                 ),
                               ),
                             ),
-                          ) //Text('$ingredientLines')
+                          ),
+                          SizedBox(
+                            height: 24,
+                          ),
+                          Text(
+                            "Preparations",
+                            style: GoogleFonts.roboto(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            height: 4,
+                          ),
+                          Text(
+                              "This recipe is provided by $source. You can view the detailed preparation by clicking the button below."),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Center(
+                            child: GestureDetector(
+                              onTap: () {
+                                _launchURL();
+                              },
+                              child: RoundedButton(
+                                displayText: "Preparation Instructions",
+                                bgColor: Colors.orangeAccent,
+                                textColor: Colors.black,
+                              ),
+                            ),
+                          ),
+                          Spacer(),
                         ],
                       ),
                     ),

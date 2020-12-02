@@ -67,6 +67,8 @@ class _RelatedSearchState extends State<RelatedSearch> {
                     ingredientLines: list[index]['recipe']['ingredientLines'],
                     cal: list[index]['recipe']['calories'],
                     time: list[index]['recipe']['totalTime'],
+                    url: list[index]['recipe']['url'],
+                    servings: list[index]['recipe']['yield'],
                     image: NetworkImage(list[index]['recipe']['image']));
               });
         },
@@ -76,11 +78,13 @@ class _RelatedSearchState extends State<RelatedSearch> {
 
   Widget makeItem(
       {image,
+      url,
       tag,
       context,
       title,
       shareAs,
       source,
+      servings,
       ingredientLines,
       cal,
       time}) {
@@ -100,6 +104,8 @@ class _RelatedSearchState extends State<RelatedSearch> {
                           ingredientLines: ingredientLines,
                           cal: cal,
                           time: time,
+                          servings: servings,
+                          url: url,
                         )));
           },
           child: Container(
