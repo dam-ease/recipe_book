@@ -15,7 +15,9 @@ class RecipeSearch extends StatelessWidget {
           children: [
             FloatingActionButton(
               mini: true,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context);
+              },
               backgroundColor: Color.fromRGBO(255, 255, 255, 0.5),
               child: Icon(
                 Icons.arrow_back,
@@ -48,7 +50,7 @@ class RecipeSearch extends StatelessWidget {
         constraints: BoxConstraints.expand(),
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage("images/recipe.png"), fit: BoxFit.cover),
+              image: AssetImage("images/img14.jpg"), fit: BoxFit.cover),
         ),
         child: SafeArea(
           child: SingleChildScrollView(

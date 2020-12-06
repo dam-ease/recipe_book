@@ -9,7 +9,7 @@ String applicationKey = '5c63c233f29e31332045a6c19381d1d6';
 class GetApi {
   Future getIngredients(String query) async {
     var url =
-        'https://api.edamam.com/search?q=$query&app_id=$applicationId&app_key=$applicationKey';
+        'https://api.edamam.com/search?q=$query&app_id=$applicationId&app_key=$applicationKey&from=0&to=50';
 
     http.Response response = await http.get(url);
 

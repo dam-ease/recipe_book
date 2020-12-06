@@ -21,6 +21,7 @@ class RecipeDetails extends StatelessWidget {
       this.source,
       this.title});
   final ScrollController _scrollController = ScrollController();
+
   _launchURL() async {
     String prepUrl = '$url';
     if (await canLaunch(prepUrl)) {
@@ -66,9 +67,7 @@ class RecipeDetails extends StatelessWidget {
                 height: size.height * 0.55,
                 width: double.infinity,
                 padding: EdgeInsets.all(20),
-                // margin: EdgeInsets.only(bottom: 20),
                 decoration: BoxDecoration(
-                  //borderRadius: BorderRadius.circular(20),
                   image: DecorationImage(
                     image: image,
                     fit: BoxFit.cover,
@@ -104,7 +103,6 @@ class RecipeDetails extends StatelessWidget {
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
-                              //Spacer(),
                               IconButton(
                                   icon: Icon(Icons.share),
                                   onPressed: () {
@@ -223,7 +221,7 @@ class RecipeDetails extends StatelessWidget {
                           ),
                           Center(
                             child: Text(
-                              '$serv Servings',
+                              '$serv Serving(s)',
                               style: GoogleFonts.roboto(
                                   color: Colors.orangeAccent,
                                   fontWeight: FontWeight.bold),
@@ -240,7 +238,6 @@ class RecipeDetails extends StatelessWidget {
                           SizedBox(
                             height: 4,
                           ),
-                          //We are going to be using a listView Builder here but for the mean time
                           Expanded(
                             child: MediaQuery.removePadding(
                               context: context,
