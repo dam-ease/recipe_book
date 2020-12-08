@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:recipe_book/screens/explore.dart';
+import 'package:recipe_book/screens/todo.dart';
 
 class GridPage extends StatelessWidget {
   Items item1 =
@@ -37,7 +38,12 @@ class GridPage extends StatelessWidget {
                             MaterialPageRoute(builder: (context) {
                           return ExplorePage();
                         }));
-                      } else {}
+                      } else {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return ToDo();
+                        }));
+                      }
                     },
                     child: Container(
                       decoration: BoxDecoration(
