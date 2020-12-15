@@ -25,7 +25,7 @@ class IngredientSearch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    // final size = MediaQuery.of(context).size;
     return
         //  Provider<String>(
         //   create: (context) => ingredientInput,
@@ -40,7 +40,7 @@ class IngredientSearch extends StatelessWidget {
             FloatingActionButton(
               mini: true,
               onPressed: () {
-                Navigator.pushNamed(context, 'fifth');
+                Navigator.pop(context);
               },
               backgroundColor: Color.fromRGBO(255, 255, 255, 0.5),
               child: Icon(

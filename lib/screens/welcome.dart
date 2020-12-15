@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:recipe_book/screens/grid_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
+import 'package:recipe_book/services/auth.dart';
 
 class Welcome extends StatelessWidget {
-  final _auth = FirebaseAuth.instance;
+  final AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,9 +77,8 @@ class Welcome extends StatelessWidget {
                       //   ],
                       // )
                       FlatButton.icon(
-                        onPressed: () {
-                          _auth.signOut();
-                          Navigator.pushNamed(context, 'second');
+                        onPressed: () async {
+                          await _auth.signOut();
                         },
                         icon: Image.asset(
                           "images/logout.png",

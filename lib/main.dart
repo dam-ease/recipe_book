@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_book/screens/ingredient_search.dart';
-import 'package:recipe_book/screens/login.dart';
-import 'package:recipe_book/screens/welcome.dart';
-import 'package:recipe_book/screens/recipe_search.dart';
-import 'package:recipe_book/screens/signup.dart';
+import 'package:provider/provider.dart';
+import 'package:recipe_book/models/user.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:recipe_book/screens/wrapper.dart';
+import 'package:recipe_book/services/auth.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,15 +14,19 @@ void main() async {
 class MyRecipeBook extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      initialRoute: 'first',
-      routes: {
-        'first': (context) => SignUp(),
-        'second': (context) => LogIn(),
-        'third': (context) => IngredientSearch(),
-        'fourth': (context) => RecipeSearch(),
-        'fifth': (context) => Welcome(),
-      },
+    return StreamProvider<User>.value(
+      value: AuthService().user,
+      child: MaterialApp(
+        home: Wrapper(),
+        // initialRoute: 'first',
+        // routes: {
+        //   'first': (context) => Wrapper(),
+        //   //'second': (context) => LogIn(),
+        //   'third': (context) => IngredientSearch(),
+        //   'fourth': (context) => RecipeSearch(),
+        //   'fifth': (context) => Welcome(),
+        // },
+      ),
     );
   }
 }

@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:recipe_book/constants.dart';
+import 'package:recipe_book/screens/explore.dart';
+import 'package:recipe_book/screens/ingredient_search.dart';
+import 'package:recipe_book/screens/related_search.dart';
+import 'package:recipe_book/screens/recipe_search.dart';
 
 class RecipeSearch extends StatelessWidget {
+  TextEditingController myController = TextEditingController();
+  String recipeInput;
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    // final size = MediaQuery.of(context).size;
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -24,12 +31,12 @@ class RecipeSearch extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
-            SizedBox(
-              width: size.width * 0.3,
-            ),
+            Spacer(),
             RaisedButton(
               onPressed: () {
-                Navigator.pushNamed(context, 'third');
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return IngredientSearch();
+                }));
               },
               shape: StadiumBorder(),
               color: Color.fromRGBO(255, 255, 255, 0.7),
@@ -77,16 +84,35 @@ class RecipeSearch extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(left: 20.0, right: 20.0),
                   child: TextFormField(
+                    controller: myController,
                     decoration: kInputDecoration.copyWith(
                         hintText: 'What recipe are you looking for?',
                         contentPadding: EdgeInsets.only(left: 15.0),
-                        suffixIcon: Icon(
-                          Icons.search,
-                          color: Colors.grey,
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            Icons.search,
+                            color: Colors.grey,
+                          ),
+                          onPressed: () {
+                            if (myController.text.isNotEmpty) {
+                              print(myController.text);
+                              recipeInput = myController.text;
+                              print(recipeInput);
+                              //GetApi().getIngredients(ingredientInput);
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return RelatedSearch(
+                                  ingredient: myController.text,
+                                );
+                              }));
+                            } else {
+                              print('do not do it');
+                              // return 'Please enter your Recipe';
+                            }
+                          },
                         ),
                         fillColor: Colors.white,
                         hintStyle: kHintStyle2),
-                    onChanged: (value) => {print(value)},
                   ),
                 ),
                 SizedBox(
@@ -108,28 +134,70 @@ class RecipeSearch extends StatelessWidget {
                       customDivider(),
                       CustomListTile(
                         title: 'Easy Mexican Casserole',
-                        onPressed: () => null,
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return RelatedSearch(
+                              ingredient: 'Easy Mexican Casserole',
+                            );
+                          }));
+                        },
                       ),
                       customDivider(),
                       CustomListTile(
-                          title: 'Thai Chicken Balls', onPressed: () => null),
+                          title: 'Thai Chicken Balls',
+                          onPressed: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return RelatedSearch(
+                                ingredient: 'Thai Chicken Balls',
+                              );
+                            }));
+                          }),
                       customDivider(),
                       CustomListTile(
                           title: 'Honey Mustard Pork Chops',
-                          onPressed: () => null),
+                          onPressed: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return RelatedSearch(
+                                ingredient: 'Honey Mustard Pork Chops',
+                              );
+                            }));
+                          }),
                       customDivider(),
                       CustomListTile(
                           title: 'Salsa Chicken Rice Casserole',
-                          onPressed: () => null),
+                          onPressed: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return RelatedSearch(
+                                ingredient: 'Salsa Chicken Rice Casserole',
+                              );
+                            }));
+                          }),
                       customDivider(),
                       CustomListTile(
                           title: 'Banana Cinnamon Roll Casserole',
-                          onPressed: () => null),
+                          onPressed: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return RelatedSearch(
+                                ingredient: 'Banana Cinnamon Roll Casserole',
+                              );
+                            }));
+                          }),
                       // customDivider(),
                       SizedBox(
                         height: 36,
                       ),
                       GestureDetector(
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return ExplorePage();
+                          }));
+                        },
                         child: Text(
                           'Explore more recipes',
                           style: kHintStyle2.copyWith(color: Colors.green),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:recipe_book/screens/explore.dart';
+import 'package:recipe_book/screens/ingredient_search.dart';
+import 'package:recipe_book/screens/recipe_search.dart';
 import 'package:recipe_book/screens/todo.dart';
 
 class GridPage extends StatelessWidget {
@@ -28,9 +30,15 @@ class GridPage extends StatelessWidget {
                       int num = myList.indexOf(data);
                       print(num);
                       if (num == 0) {
-                        Navigator.pushNamed(context, 'third');
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return IngredientSearch();
+                        }));
                       } else if (num == 1) {
-                        Navigator.pushNamed(context, 'fourth');
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return RecipeSearch();
+                        }));
                       } else if (num == 2) {
                       } else if (num == 3) {
                       } else if (num == 4) {
