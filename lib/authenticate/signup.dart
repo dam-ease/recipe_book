@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:provider/provider.dart';
 import 'package:recipe_book/components/rounded_button.dart';
 import 'package:recipe_book/constants.dart';
+import 'package:recipe_book/models/user.dart';
 import 'package:recipe_book/services/auth.dart';
+import 'package:recipe_book/services/database.dart';
 
 class SignUp extends StatefulWidget {
   final Function toggleView;
@@ -32,6 +35,7 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User>(context);
     return Scaffold(
       body: ModalProgressHUD(
           inAsyncCall: showSpinner,
@@ -128,8 +132,10 @@ class _SignUpState extends State<SignUp> {
                               setState(() {
                                 showSpinner = true;
                               });
-                              dynamic result = await _auth
-                                  .signInWithEmailAndPassword(email, password);
+
+                              dynamic result =
+                                  await _auth.registerWithEmailAndPassword(
+                                      email, password, username);
                               if (result == null) {
                                 setState(() {
                                   error =

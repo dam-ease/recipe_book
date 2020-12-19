@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_book/screens/recipe_details.dart';
 import 'package:recipe_book/services/getApi.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class RelatedSearch extends StatefulWidget {
   final String ingredient;
@@ -69,7 +70,7 @@ class _RelatedSearchState extends State<RelatedSearch> {
                     time: list[index]['recipe']['totalTime'],
                     url: list[index]['recipe']['url'],
                     servings: list[index]['recipe']['yield'],
-                    image: NetworkImage(list[index]['recipe']['image']));
+                    image: list[index]['recipe']['image']);
               });
         },
       ),
@@ -117,7 +118,7 @@ class _RelatedSearchState extends State<RelatedSearch> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               image: DecorationImage(
-                image: image,
+                image: NetworkImage(image),
                 fit: BoxFit.cover,
               ),
               boxShadow: [
