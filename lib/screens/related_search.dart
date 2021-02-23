@@ -52,9 +52,10 @@ class _RelatedSearchState extends State<RelatedSearch> {
           if (!snapshot.hasData) {
             return Center(child: CircularProgressIndicator());
           }
+
           var ingredient = snapshot.data;
           List list = ingredient['hits'];
-          print('$list here');
+          //print('$list here');
           return ListView.builder(
               itemCount: list.length,
               itemBuilder: (context, index) {

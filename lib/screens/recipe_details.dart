@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:recipe_book/components/rounded_button.dart';
+import 'package:recipe_book/favourite/fav_wid.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class RecipeDetails extends StatelessWidget {
-  final NetworkImage image, tag;
+  final NetworkImage tag;
+  final image;
   final String title, source, shareAs, url;
   final double cal, time, servings;
   final List ingredientLines;
@@ -69,7 +71,7 @@ class RecipeDetails extends StatelessWidget {
                 padding: EdgeInsets.all(20),
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: image,
+                    image: NetworkImage(image),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -114,11 +116,9 @@ class RecipeDetails extends StatelessWidget {
                                             box.localToGlobal(Offset.zero) &
                                                 box.size);
                                   }),
-                              IconButton(
-                                  icon: Icon(
-                                    Icons.favorite_border,
-                                  ),
-                                  onPressed: () {}),
+                              FavoriteWidget(
+                                title: title,
+                              ),
                             ],
                           ),
                           SizedBox(
