@@ -25,6 +25,9 @@ class IngredientSearch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    double width = size.width;
+    double height = size.height;
     // final size = MediaQuery.of(context).size;
     return
         //  Provider<String>(
@@ -82,11 +85,10 @@ class IngredientSearch extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                SizedBox(
-                  height: 26.0,
-                ),
+                SizedBox(height: height * 0.04),
                 Padding(
-                  padding: EdgeInsets.only(left: 20.0, right: 20.0),
+                  padding: EdgeInsets.only(
+                      left: width * 0.0555, right: width * 0.0555),
                   child: Text(
                     'Search by Ingredient',
                     style: TextStyle(
@@ -97,15 +99,16 @@ class IngredientSearch extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 10.0,
+                  height: height * 0.0156,
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 20.0, right: 20.0),
+                  padding: EdgeInsets.only(
+                      left: width * 0.0555, right: width * 0.0555),
                   child: TextFormField(
                     controller: myController,
                     decoration: kInputDecoration.copyWith(
                         hintText: 'What ingredient are you looking for?',
-                        contentPadding: EdgeInsets.only(left: 15.0),
+                        contentPadding: EdgeInsets.only(left: width * 0.04167),
                         suffixIcon: IconButton(
                           icon: Icon(
                             Icons.search,
@@ -135,7 +138,7 @@ class IngredientSearch extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 49.0,
+                  height: height * 0.0765,
                 ),
                 Container(
                   decoration: BoxDecoration(
@@ -208,7 +211,7 @@ class IngredientSearch extends StatelessWidget {
                           }),
                       // customDivider(),
                       SizedBox(
-                        height: 36,
+                        height: height * 0.056,
                       ),
                       GestureDetector(
                         onTap: () {

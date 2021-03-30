@@ -11,6 +11,9 @@ class Welcome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    double width = size.width;
+    double height = size.height;
     final user = provider.Provider.of<User>(context);
     return StreamBuilder<UserData>(
       stream: DatabaseService(uid: user.uid).userData,
@@ -32,12 +35,12 @@ class Welcome extends StatelessWidget {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: 100,
+                        height: height * 0.156,
                       ),
                       Padding(
                         padding: EdgeInsets.only(
-                          left: 16,
-                          right: 16,
+                          left: width * 0.044,
+                          right: width * 0.044,
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -56,7 +59,7 @@ class Welcome extends StatelessWidget {
                                   ),
                                 ),
                                 SizedBox(
-                                  height: 4,
+                                  height: height * 0.00625,
                                 ),
                                 Text(
                                   'Home',
@@ -82,7 +85,7 @@ class Welcome extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        height: 40,
+                        height: height * 0.0625,
                       ),
                       GridPage(),
                     ],
@@ -106,12 +109,12 @@ class Welcome extends StatelessWidget {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: 100,
+                        height: height * 0.156,
                       ),
                       Padding(
                         padding: EdgeInsets.only(
-                          left: 16,
-                          right: 16,
+                          left: width * 0.044,
+                          right: width * 0.044,
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -130,7 +133,7 @@ class Welcome extends StatelessWidget {
                                   ),
                                 ),
                                 SizedBox(
-                                  height: 4,
+                                  height: height * 0.00625,
                                 ),
                                 Text(
                                   'Home',
@@ -156,7 +159,7 @@ class Welcome extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        height: 40,
+                        height: height * 0.125,
                       ),
                       GridPage(),
                     ],

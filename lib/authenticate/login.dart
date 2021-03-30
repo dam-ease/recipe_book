@@ -31,6 +31,9 @@ class _LogInState extends State<LogIn> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    double width = size.width;
+    double height = size.height;
     return Scaffold(
       body: ModalProgressHUD(
           inAsyncCall: showSpinner,
@@ -43,7 +46,8 @@ class _LogInState extends State<LogIn> {
                     fit: BoxFit.cover,
                   ),
                 ),
-                padding: EdgeInsets.fromLTRB(20, 89, 20, 50),
+                padding: EdgeInsets.fromLTRB(width * 0.055, height * 0.139,
+                    width * 0.055, height * 0.078),
                 constraints: BoxConstraints.expand(),
                 child: SafeArea(
                   child: SingleChildScrollView(
@@ -61,7 +65,7 @@ class _LogInState extends State<LogIn> {
                               style: kSecondStyle,
                             ),
                             SizedBox(
-                              height: 73.5,
+                              height: height * 0.115,
                             ),
                             TextFormField(
                               validator: validateEmail,
@@ -75,7 +79,7 @@ class _LogInState extends State<LogIn> {
                               },
                             ),
                             SizedBox(
-                              height: 16.0,
+                              height: height * 0.025,
                             ),
                             TextFormField(
                               onChanged: (value) {
@@ -91,7 +95,7 @@ class _LogInState extends State<LogIn> {
                                   hintText: 'Password'),
                             ),
                             SizedBox(
-                              height: 6.0,
+                              height: height * 0.009375,
                             ),
                             GestureDetector(
                               child: Text(
@@ -104,7 +108,7 @@ class _LogInState extends State<LogIn> {
                               },
                             ),
                             SizedBox(
-                              height: 25.0,
+                              height: height * 0.039,
                             ),
                             GestureDetector(
                               onTap: () async {
@@ -131,13 +135,13 @@ class _LogInState extends State<LogIn> {
                               ),
                             ),
                             SizedBox(
-                              height: 20.0,
+                              height: height * 0.03125,
                             ),
                             Text('or',
                                 style: kForgotStyle,
                                 textAlign: TextAlign.center),
                             SizedBox(
-                              height: 20.0,
+                              height: height * 0.03125,
                             ),
                             GestureDetector(
                               onTap: () {

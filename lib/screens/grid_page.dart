@@ -3,25 +3,27 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:recipe_book/screens/explore.dart';
 import 'package:recipe_book/screens/ingredient_search.dart';
 import 'package:recipe_book/screens/recipe_search.dart';
-import 'package:recipe_book/screens/todo.dart';
 
 class GridPage extends StatelessWidget {
   Items item1 =
       new Items(title: 'Search by Ingredient', img: 'images/search.jpg');
   Items item2 = new Items(title: 'Search by Recipe', img: 'images/search2.jpg');
   Items item3 = new Items(title: 'Favorites', img: 'images/favorite.png');
-  Items item4 = new Items(title: 'History', img: 'images/history.png');
-  Items item5 = new Items(title: 'Explore', img: 'images/explore.png');
-  Items item6 = new Items(title: 'ToDo', img: 'images/todo.jpg');
+
+  Items item4 = new Items(title: 'Explore', img: 'images/explore.png');
+
   @override
   Widget build(BuildContext context) {
-    List<Items> myList = [item1, item2, item3, item4, item5, item6];
+    final size = MediaQuery.of(context).size;
+    double width = size.width;
+    double height = size.height;
+    List<Items> myList = [item1, item2, item3, item4];
 
     return Flexible(
       child: GridView.count(
           crossAxisCount: 2,
           childAspectRatio: 1.0,
-          padding: EdgeInsets.only(left: 16, right: 16),
+          padding: EdgeInsets.only(left: width * 0.044, right: width * 0.044),
           crossAxisSpacing: 18,
           mainAxisSpacing: 18,
           children: myList
@@ -40,16 +42,10 @@ class GridPage extends StatelessWidget {
                           return RecipeSearch();
                         }));
                       } else if (num == 2) {
-                      } else if (num == 3) {
-                      } else if (num == 4) {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return ExplorePage();
-                        }));
                       } else {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return ToDo();
+                          return ExplorePage();
                         }));
                       }
                     },
@@ -63,10 +59,10 @@ class GridPage extends StatelessWidget {
                         children: [
                           Image.asset(
                             data.img,
-                            width: 42,
+                            width: width * 0.11667,
                           ),
                           SizedBox(
-                            height: 14,
+                            height: height * 0.0219,
                           ),
                           Text(
                             data.title,

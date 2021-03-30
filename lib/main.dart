@@ -17,15 +17,8 @@ class MyRecipeBook extends StatelessWidget {
     return StreamProvider<User>.value(
       value: AuthService().user,
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: Wrapper(),
-        // initialRoute: 'first',
-        // routes: {
-        //   'first': (context) => Wrapper(),
-        //   //'second': (context) => LogIn(),
-        //   'third': (context) => IngredientSearch(),
-        //   'fourth': (context) => RecipeSearch(),
-        //   'fifth': (context) => Welcome(),
-        // },
       ),
     );
   }

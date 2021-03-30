@@ -25,6 +25,9 @@ class _RelatedSearchState extends State<RelatedSearch> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    double width = size.width;
+    double height = size.height;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -61,6 +64,7 @@ class _RelatedSearchState extends State<RelatedSearch> {
               itemBuilder: (context, index) {
                 //print("Im here");
                 return makeItem(
+                    height: height,
                     tag: NetworkImage(list[index]['recipe']['image']),
                     context: context,
                     title: list[index]['recipe']['label'].toString(),
@@ -88,6 +92,7 @@ class _RelatedSearchState extends State<RelatedSearch> {
       source,
       servings,
       ingredientLines,
+      height,
       cal,
       time}) {
     return Hero(
@@ -111,7 +116,7 @@ class _RelatedSearchState extends State<RelatedSearch> {
                         )));
           },
           child: Container(
-            height: 250,
+            height: height * 0.391,
             width: double.infinity,
             padding: EdgeInsets.all(20),
             //margin: EdgeInsets.only(bottom: 20, left: 20, right: 20),

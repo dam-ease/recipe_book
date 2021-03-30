@@ -35,6 +35,9 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    double width = size.width;
+    double height = size.height;
     final user = Provider.of<User>(context);
     return Scaffold(
       body: ModalProgressHUD(
@@ -48,7 +51,8 @@ class _SignUpState extends State<SignUp> {
                     fit: BoxFit.cover,
                   ),
                 ),
-                padding: EdgeInsets.fromLTRB(20, 89, 20, 50),
+                padding: EdgeInsets.fromLTRB(width * 0.055, height * 0.139,
+                    width * 0.055, height * 0.078),
                 constraints: BoxConstraints.expand(),
                 child: SafeArea(
                     child: SingleChildScrollView(
@@ -66,7 +70,7 @@ class _SignUpState extends State<SignUp> {
                           style: kSecondStyle,
                         ),
                         SizedBox(
-                          height: 73.5,
+                          height: height * 0.1148,
                         ),
                         TextFormField(
                           validator: (value) =>
@@ -81,7 +85,7 @@ class _SignUpState extends State<SignUp> {
                               kInputDecoration.copyWith(hintText: 'UserName'),
                         ),
                         SizedBox(
-                          height: 16.0,
+                          height: height * 0.025,
                         ),
                         TextFormField(
                           validator: validateEmail,
@@ -95,7 +99,7 @@ class _SignUpState extends State<SignUp> {
                           },
                         ),
                         SizedBox(
-                          height: 16.0,
+                          height: height * 0.025,
                         ),
                         TextFormField(
                           onChanged: (value) {
@@ -111,7 +115,7 @@ class _SignUpState extends State<SignUp> {
                               kInputDecoration.copyWith(hintText: 'Password'),
                         ),
                         SizedBox(
-                          height: 6.0,
+                          height: height * 0.009375,
                         ),
                         GestureDetector(
                           child: Text(
@@ -124,7 +128,7 @@ class _SignUpState extends State<SignUp> {
                           },
                         ),
                         SizedBox(
-                          height: 25.0,
+                          height: height * 0.039,
                         ),
                         GestureDetector(
                           onTap: () async {
@@ -151,7 +155,7 @@ class _SignUpState extends State<SignUp> {
                             textColor: Color.fromRGBO(52, 168, 83, 0.8),
                           ),
                         ),
-                        SizedBox(height: 12.0),
+                        SizedBox(height: height * 0.01875),
                         Text(
                           error,
                           style: TextStyle(
@@ -165,11 +169,11 @@ class _SignUpState extends State<SignUp> {
                 )),
               ),
               Positioned(
-                  top: 125.0,
-                  right: 20.0,
+                  top: height * 0.1953,
+                  right: width * 0.0555,
                   child: Container(
-                    height: 52.0,
-                    width: 52.0,
+                    height: height * 0.08125,
+                    width: width * 0.1444,
                     decoration: BoxDecoration(
                         image: DecorationImage(
                       image: AssetImage("images/logo.png"),

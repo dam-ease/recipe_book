@@ -7,6 +7,9 @@ class IconContent extends StatelessWidget {
   final String label;
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    double width = size.width;
+    double height = size.height;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -15,7 +18,7 @@ class IconContent extends StatelessWidget {
           size: 80.0,
         ),
         SizedBox(
-          height: 15.0,
+          height: height * 0.0234,
         ),
         Text(
           label,

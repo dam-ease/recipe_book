@@ -69,32 +69,24 @@ class _ExplorePageState extends State<ExplorePage> {
               onPressed: () {
                 Navigator.pop(context);
               }),
-          bottom: TabBar(indicatorColor: Colors.white, tabs: [
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Tab(
-                text: "Meals of the Day",
-              ),
-            ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Tab(
-                text: "Healthy Meals",
-              ),
-            ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Tab(
-                text: "Diet Meals",
-              ),
-            ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Tab(
-                text: "Around the World",
-              ),
-            ),
-          ]),
+          bottom: TabBar(
+              indicatorColor: Colors.white,
+              isScrollable: true,
+              indicatorSize: TabBarIndicatorSize.tab,
+              tabs: [
+                Tab(
+                  text: "Meals of the Day",
+                ),
+                Tab(
+                  text: "Healthy Meals",
+                ),
+                Tab(
+                  text: "Diet Meals",
+                ),
+                Tab(
+                  text: "Around the World",
+                ),
+              ]),
         ),
         body: TabBarView(children: [
           Column(
@@ -222,8 +214,15 @@ class TypeCont extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    double width = size.width;
+    double height = size.height;
     return Container(
-      margin: EdgeInsets.only(top: 20, left: 30, right: 30, bottom: 10),
+      margin: EdgeInsets.only(
+          top: height * 0.03125,
+          left: width * 0.0833,
+          right: width * 0.0833,
+          bottom: height * 0.0156),
       color: Colors.white,
       child: Column(
         children: [
@@ -232,7 +231,7 @@ class TypeCont extends StatelessWidget {
             children: [Image.asset(imageURL)],
           ),
           Container(
-            height: 50,
+            height: height * 0.078,
             child: Center(
               child: Text(
                 '$text',

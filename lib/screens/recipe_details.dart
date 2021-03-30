@@ -41,6 +41,8 @@ class RecipeDetails extends StatelessWidget {
     String text = shareAs.toString();
     String subject = 'Check out this recipe';
     final size = MediaQuery.of(context).size;
+    double width = size.width;
+    double height = size.height;
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -66,7 +68,7 @@ class RecipeDetails extends StatelessWidget {
             Hero(
               tag: tag,
               child: Container(
-                height: size.height * 0.55,
+                height: height * 0.55,
                 width: double.infinity,
                 padding: EdgeInsets.all(20),
                 decoration: BoxDecoration(
@@ -85,7 +87,7 @@ class RecipeDetails extends StatelessWidget {
                   return SingleChildScrollView(
                     controller: controller,
                     child: Container(
-                      height: size.height,
+                      height: height,
                       padding: EdgeInsets.all(24),
                       decoration: BoxDecoration(
                           color: Colors.white,
@@ -122,7 +124,7 @@ class RecipeDetails extends StatelessWidget {
                             ],
                           ),
                           SizedBox(
-                            height: 2,
+                            height: height * 0.003125,
                           ),
                           Text(
                             'Source: $source',
@@ -130,7 +132,7 @@ class RecipeDetails extends StatelessWidget {
                                 GoogleFonts.roboto(fontWeight: FontWeight.w300),
                           ),
                           SizedBox(
-                            height: 24,
+                            height: height * 0.0375,
                           ),
                           Container(
                             child: Row(
@@ -141,7 +143,8 @@ class RecipeDetails extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(10),
                                         border: Border.all(
                                             color: Colors.grey[200])),
-                                    padding: EdgeInsets.symmetric(vertical: 16),
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: height * 0.025),
                                     child: Column(
                                       children: [
                                         Text(
@@ -160,7 +163,7 @@ class RecipeDetails extends StatelessWidget {
                                   ),
                                 ),
                                 SizedBox(
-                                  width: 10,
+                                  width: width * 0.0278,
                                 ),
                                 Expanded(
                                   child: Container(
@@ -168,7 +171,8 @@ class RecipeDetails extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(10),
                                         border: Border.all(
                                             color: Colors.grey[200])),
-                                    padding: EdgeInsets.symmetric(vertical: 16),
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: height * 0.025),
                                     child: Column(
                                       children: [
                                         Text(
@@ -187,7 +191,7 @@ class RecipeDetails extends StatelessWidget {
                                   ),
                                 ),
                                 SizedBox(
-                                  width: 10,
+                                  width: width * 0.0278,
                                 ),
                                 Expanded(
                                   child: Container(
@@ -195,7 +199,8 @@ class RecipeDetails extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(10),
                                         border: Border.all(
                                             color: Colors.grey[200])),
-                                    padding: EdgeInsets.symmetric(vertical: 16),
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: height * 0.025),
                                     child: Column(
                                       children: [
                                         Text(
@@ -217,7 +222,7 @@ class RecipeDetails extends StatelessWidget {
                             ),
                           ),
                           SizedBox(
-                            height: 15,
+                            height: height * 0.023,
                           ),
                           Center(
                             child: Text(
@@ -228,7 +233,7 @@ class RecipeDetails extends StatelessWidget {
                             ),
                           ),
                           SizedBox(
-                            height: 15,
+                            height: height * 0.023,
                           ),
                           Text(
                             "Ingredients",
@@ -236,7 +241,7 @@ class RecipeDetails extends StatelessWidget {
                                 fontSize: 20, fontWeight: FontWeight.bold),
                           ),
                           SizedBox(
-                            height: 4,
+                            height: height * 0.00625,
                           ),
                           Expanded(
                             child: MediaQuery.removePadding(
@@ -259,21 +264,17 @@ class RecipeDetails extends StatelessWidget {
                             ),
                           ),
                           SizedBox(
-                            height: 24,
+                            height: height * 0.0375,
                           ),
                           Text(
                             "Preparations",
                             style: GoogleFonts.roboto(
                                 fontSize: 20, fontWeight: FontWeight.bold),
                           ),
-                          SizedBox(
-                            height: 4,
-                          ),
+                          SizedBox(height: height * 0.00625),
                           Text(
                               "This recipe is provided by $source. You can view the detailed preparation by clicking the button below."),
-                          SizedBox(
-                            height: 15,
-                          ),
+                          SizedBox(height: height * 0.023),
                           Center(
                             child: GestureDetector(
                               onTap: () {
