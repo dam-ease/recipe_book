@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:recipe_book/components/rounded_button.dart';
-import 'package:recipe_book/favourite/fav_wid.dart';
+
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -118,9 +118,6 @@ class RecipeDetails extends StatelessWidget {
                                             box.localToGlobal(Offset.zero) &
                                                 box.size);
                                   }),
-                              FavoriteWidget(
-                                title: title,
-                              ),
                             ],
                           ),
                           SizedBox(

@@ -159,7 +159,7 @@ class Welcome extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        height: height * 0.125,
+                        height: height * 0.05,
                       ),
                       GridPage(),
                     ],

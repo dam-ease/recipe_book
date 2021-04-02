@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:recipe_book/constants.dart';
 import 'package:recipe_book/screens/explore.dart';
 import 'package:recipe_book/screens/related_search.dart';
@@ -9,30 +8,13 @@ class IngredientSearch extends StatelessWidget {
   TextEditingController myController = TextEditingController();
   String ingredientInput;
 
-  // final _auth = FirebaseAuth.instance;
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   //getIngredients('banana');
-  // }
-
-  // @override
-  // void dispose() {
-  //   // Clean up the controller when the widget is disposed.
-  //   myController.dispose();
-  //   super.dispose();
-  // }
-
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     double width = size.width;
     double height = size.height;
-    // final size = MediaQuery.of(context).size;
-    return
-        //  Provider<String>(
-        //   create: (context) => ingredientInput,
-        Scaffold(
+
+    return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -149,63 +131,81 @@ class IngredientSearch extends StatelessWidget {
                   child: Column(
                     children: [
                       CustomListTile(
-                          title: 'My search history', onPressed: () => null),
-                      customDivider(),
-                      CustomListTile(
-                          title: 'My favorite recipes', onPressed: () => null),
-                      customDivider(),
-                      CustomListTile(
-                        title: 'Easy Mexican Casserole',
+                        title: 'Flour',
                         onPressed: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
                             return RelatedSearch(
-                              ingredient: 'Easy Mexican Casserole',
+                              ingredient: 'Flour',
                             );
                           }));
                         },
                       ),
                       customDivider(),
                       CustomListTile(
-                          title: 'Thai Chicken Balls',
+                        title: 'Pasta',
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return RelatedSearch(
+                              ingredient: 'Pasta',
+                            );
+                          }));
+                        },
+                      ),
+                      customDivider(),
+                      CustomListTile(
+                        title: 'Rice',
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return RelatedSearch(
+                              ingredient: 'Rice',
+                            );
+                          }));
+                        },
+                      ),
+                      customDivider(),
+                      CustomListTile(
+                          title: 'Chicken',
                           onPressed: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
                               return RelatedSearch(
-                                ingredient: 'Thai Chicken Balls',
+                                ingredient: 'Chicken',
                               );
                             }));
                           }),
                       customDivider(),
                       CustomListTile(
-                          title: 'Honey Mustard Pork Chops',
+                          title: 'Honey',
                           onPressed: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
                               return RelatedSearch(
-                                ingredient: 'Honey Mustard Pork Chops',
+                                ingredient: 'Honey',
                               );
                             }));
                           }),
                       customDivider(),
                       CustomListTile(
-                          title: 'Salsa Chicken Rice Casserole',
+                          title: 'Vegetable',
                           onPressed: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
                               return RelatedSearch(
-                                ingredient: 'Salsa Chicken Rice Casserole',
+                                ingredient: 'Vegetable',
                               );
                             }));
                           }),
                       customDivider(),
                       CustomListTile(
-                          title: 'Banana Cinnamon Roll Casserole',
+                          title: 'Banana',
                           onPressed: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
                               return RelatedSearch(
-                                ingredient: 'Banana Cinnamon Roll Casserole',
+                                ingredient: 'Banana',
                               );
                             }));
                           }),
@@ -221,7 +221,7 @@ class IngredientSearch extends StatelessWidget {
                           }));
                         },
                         child: Text(
-                          'Explore more recipes',
+                          'Explore recipes',
                           style: kHintStyle2.copyWith(color: Colors.green),
                         ),
                       ),

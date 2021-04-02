@@ -1,8 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:recipe_book/models/ingredient_model.dart';
-
 String applicationId = '567926d5';
 String applicationKey = '5c63c233f29e31332045a6c19381d1d6';
 

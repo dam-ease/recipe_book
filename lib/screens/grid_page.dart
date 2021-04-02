@@ -8,22 +8,20 @@ class GridPage extends StatelessWidget {
   Items item1 =
       new Items(title: 'Search by Ingredient', img: 'images/search.jpg');
   Items item2 = new Items(title: 'Search by Recipe', img: 'images/search2.jpg');
-  Items item3 = new Items(title: 'Favorites', img: 'images/favorite.png');
-
-  Items item4 = new Items(title: 'Explore', img: 'images/explore.png');
+  Items item3 = new Items(title: 'Explore', img: 'images/explore.png');
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     double width = size.width;
     double height = size.height;
-    List<Items> myList = [item1, item2, item3, item4];
+    List<Items> myList = [item1, item2, item3];
 
     return Flexible(
       child: GridView.count(
-          crossAxisCount: 2,
+          crossAxisCount: 1,
           childAspectRatio: 1.0,
-          padding: EdgeInsets.only(left: width * 0.044, right: width * 0.044),
+          padding: EdgeInsets.only(left: width * 0.15, right: width * 0.15),
           crossAxisSpacing: 18,
           mainAxisSpacing: 18,
           children: myList
@@ -41,7 +39,6 @@ class GridPage extends StatelessWidget {
                             MaterialPageRoute(builder: (context) {
                           return RecipeSearch();
                         }));
-                      } else if (num == 2) {
                       } else {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
@@ -59,7 +56,7 @@ class GridPage extends StatelessWidget {
                         children: [
                           Image.asset(
                             data.img,
-                            width: width * 0.11667,
+                            width: width * 0.5,
                           ),
                           SizedBox(
                             height: height * 0.0219,

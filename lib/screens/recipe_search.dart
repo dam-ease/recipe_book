@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:recipe_book/constants.dart';
 import 'package:recipe_book/screens/explore.dart';
 import 'package:recipe_book/screens/ingredient_search.dart';
 import 'package:recipe_book/screens/related_search.dart';
-import 'package:recipe_book/screens/recipe_search.dart';
 
 class RecipeSearch extends StatelessWidget {
   TextEditingController myController = TextEditingController();
@@ -132,18 +130,36 @@ class RecipeSearch extends StatelessWidget {
                   child: Column(
                     children: [
                       CustomListTile(
-                          title: 'My search history', onPressed: () => null),
-                      customDivider(),
-                      CustomListTile(
-                          title: 'My favorite recipes', onPressed: () => null),
-                      customDivider(),
-                      CustomListTile(
                         title: 'Easy Mexican Casserole',
                         onPressed: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
                             return RelatedSearch(
                               ingredient: 'Easy Mexican Casserole',
+                            );
+                          }));
+                        },
+                      ),
+                      customDivider(),
+                      CustomListTile(
+                        title: 'Kimchi Pasta',
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return RelatedSearch(
+                              ingredient: 'Kimchi Pasta',
+                            );
+                          }));
+                        },
+                      ),
+                      customDivider(),
+                      CustomListTile(
+                        title: 'Perfect Sushi Rice',
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return RelatedSearch(
+                              ingredient: 'Perfect Sushi Rice',
                             );
                           }));
                         },

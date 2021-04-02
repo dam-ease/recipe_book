@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_book/screens/recipe_details.dart';
 import 'package:recipe_book/services/getApi.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class RelatedSearch extends StatefulWidget {
   final String ingredient;
@@ -26,7 +25,7 @@ class _RelatedSearchState extends State<RelatedSearch> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    double width = size.width;
+
     double height = size.height;
     return Scaffold(
       appBar: AppBar(
