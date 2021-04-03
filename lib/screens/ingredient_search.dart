@@ -34,14 +34,16 @@ class IngredientSearch extends StatelessWidget {
               ),
             ),
             Spacer(),
-            RaisedButton(
+            TextButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return RecipeSearch();
                 }));
               },
-              shape: StadiumBorder(),
-              color: Color.fromRGBO(255, 255, 255, 0.7),
+              style: TextButton.styleFrom(
+                backgroundColor: Color.fromRGBO(255, 255, 255, 0.7),
+                shape: StadiumBorder(),
+              ),
               child: Text(
                 'Tap to search by Recipe',
                 style: TextStyle(

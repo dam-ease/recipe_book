@@ -71,7 +71,7 @@ class Welcome extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            FlatButton.icon(
+                            TextButton.icon(
                               onPressed: () async {
                                 await _auth.signOut();
                               },
@@ -145,7 +145,7 @@ class Welcome extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            FlatButton.icon(
+                            TextButton.icon(
                               onPressed: () async {
                                 await _auth.signOut();
                               },
@@ -153,7 +153,10 @@ class Welcome extends StatelessWidget {
                                 "images/logout.png",
                                 width: 24,
                               ),
-                              label: Text('Log Out'),
+                              label: Text(
+                                'Log Out',
+                                style: TextStyle(color: Colors.black),
+                              ),
                             )
                           ],
                         ),
